@@ -10,6 +10,7 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls;
 using System.ComponentModel.Composition;
 using System.Windows.Forms;
+using WorldsmithATF.Project;
 
 
 namespace WorldsmithATF.UI
@@ -55,7 +56,17 @@ namespace WorldsmithATF.UI
         private IDocumentService m_documentService;
 
 
+        protected override void Configure(out TreeControl treeControl, out TreeControlAdapter treeControlAdapter)
+        {
+            base.Configure(out treeControl, out treeControlAdapter);
 
+            treeControl.ShowRoot = false; // Project node can't really be edited, so hide it
+            treeControl.Text = Localizer.Localize(
+                "View the project in this control");
+            treeControl.Dock = DockStyle.Fill;
+            treeControl.AllowDrop = false;
+            treeControl.SelectionMode = SelectionMode.MultiExtended;
+        }
 
         public void Initialize()
         {
@@ -81,12 +92,24 @@ namespace WorldsmithATF.UI
 
         public bool Close(Control control)
         {
-            
+            bool closed = true;
+
+            // Get current document, if any
+            ProjectDocument document = Adapters.As<ProjectDocument>(TreeView);
+
+            // Check if document can be closed
+            if (document != null)
+            {
+                closed = m_documentService.Close(document);
+                if (closed)
+                    m_contextRegistry.RemoveContext(document);
+            }
+
+            return closed;  // app must be closing
         }
 
         public void Deactivate(Control control)
-        {
-            
+        {            
         }
     }
 }

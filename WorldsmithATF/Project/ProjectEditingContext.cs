@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WorldsmithATF.ObjectTypes;
 
-namespace WorldsmithATF
+namespace WorldsmithATF.Project
 {
-    class DotaDataEditingContext : Sce.Atf.Dom.EditingContext, IInstancingContext, INamingContext
+    class ProjectEditingContext : Sce.Atf.Dom.EditingContext, IInstancingContext, INamingContext
     {
         #region INamingContext Members
         public bool CanSetName(object item)
@@ -51,7 +51,7 @@ namespace WorldsmithATF
 
         public object Copy()
         {
-            IEnumerable<DotaDataObject> objs = Selection.AsIEnumerable<DotaDataObject>();
+            IEnumerable<ProjectFile> objs = Selection.AsIEnumerable<ProjectFile>();
             IEnumerable<DomNode> rootNodes = DomNode.GetRoots(Adapters.AsIEnumerable<DomNode>(objs));
 
             List<object> copies = new List<object>(DomNode.Copy(rootNodes));

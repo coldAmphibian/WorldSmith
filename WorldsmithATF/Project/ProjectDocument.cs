@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorldsmithATF
+namespace WorldsmithATF.Project
 {
     class ProjectDocument : DomDocument
     {
@@ -24,12 +24,12 @@ namespace WorldsmithATF
         {
             get
             {
-                DotaDataEditingContext editingContext = DomNode.Cast<DotaDataEditingContext>();
+                ProjectEditingContext editingContext = DomNode.Cast<ProjectEditingContext>();
                 return editingContext.History.Dirty;
             }
             set
             {
-                DotaDataEditingContext editingContext = DomNode.Cast<DotaDataEditingContext>();
+                ProjectEditingContext editingContext = DomNode.Cast<ProjectEditingContext>();
                 editingContext.History.Dirty = value;
             }
         }
