@@ -56,6 +56,14 @@ namespace WorldsmithATF
                 // register adapters on the root to define document and editing context
                 
 
+                //Register the adapters for the Project object model
+                DotaObjectsSchema.ProjectType.Type.Define(new ExtensionInfo<Project.Project>());
+                DotaObjectsSchema.FileType.Type.Define(new ExtensionInfo<Project.ProjectFile>());
+                DotaObjectsSchema.FolderType.Type.Define(new ExtensionInfo<Project.ProjectFolder>());
+                DotaObjectsSchema.TextFileType.Type.Define(new ExtensionInfo<Project.TextFile>());
+                DotaObjectsSchema.KVDocumentType.Type.Define(new ExtensionInfo<Project.KVFile>());
+
+
                 // register adapters to define the Dota object model
                 DotaObjectsSchema.DotaDataObjectType.Type.Define(new ExtensionInfo<DotaDataObject>());
                 DotaObjectsSchema.DotaBaseUnitType.Type.Define(new ExtensionInfo<DotaBaseUnit>());

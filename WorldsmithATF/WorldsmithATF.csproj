@@ -73,7 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomWrappers\KVFile.cs" />
     <Compile Include="DomWrappers\Project.cs" />
+    <Compile Include="DomWrappers\ProjectFolder.cs" />
+    <Compile Include="DomWrappers\TextFile.cs" />
     <Compile Include="Project\ProjectDocument.cs" />
     <Compile Include="DOMSchema\DotaObjectsSchema.cs" />
     <Compile Include="Project\ProjectEditingContext.cs" />
