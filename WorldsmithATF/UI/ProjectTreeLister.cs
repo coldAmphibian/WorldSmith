@@ -8,6 +8,7 @@ using Sce.Atf;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 using Sce.Atf.Controls;
+using Sce.Atf.Controls.PropertyEditing;
 
 namespace WorldsmithATF.UI
 {
@@ -19,6 +20,9 @@ namespace WorldsmithATF.UI
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class ProjectTreeLister : TreeControlEditor, IControlHostClient, IInitializable
     {
+
+        
+
         /// <summary>
         /// Constructor</summary>
         /// <param name="commandService">Command service</param>
@@ -30,16 +34,19 @@ namespace WorldsmithATF.UI
         public ProjectTreeLister(
             ICommandService commandService,
             IControlHostService controlHostService,
-            IContextRegistry contextRegistry
+            IContextRegistry contextRegistry,
+            ISettingsService settings
           )
             : base(commandService)
         {
             m_controlHostService = controlHostService;
             m_contextRegistry = contextRegistry;
+            this.settings = settings;
          
         }
         private IControlHostService m_controlHostService;
         private IContextRegistry m_contextRegistry;
+        private ISettingsService settings;
 
 
         protected override void Configure(out TreeControl treeControl, out TreeControlAdapter treeControlAdapter)
@@ -51,6 +58,8 @@ namespace WorldsmithATF.UI
             treeControl.Dock = DockStyle.Fill;
             treeControl.AllowDrop = true;
             treeControl.SelectionMode = SelectionMode.MultiExtended;
+
+         
         }
 
         #region IControlHostClient Members
@@ -106,7 +115,14 @@ namespace WorldsmithATF.UI
                    StandardControlGroup.Left), // don't show close button
                this);
 
-            
+            BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
+                new BoundPropertyDescriptor(typeof(GlobalSettings), 
+                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory"),
+            };
+
+            this.settings.RegisterUserSettings("Application", settings);
+            this.settings.RegisterSettings(this, settings);
+
         }
 
       

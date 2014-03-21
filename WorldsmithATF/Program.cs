@@ -10,6 +10,7 @@ using System.ComponentModel.Composition.Hosting;
 using Sce.Atf.Applications;
 using Sce.Atf.Dom;
 using WorldsmithATF.UI;
+using WorldsmithATF.Commands;
 
 namespace WorldsmithATF
 {
@@ -73,7 +74,11 @@ namespace WorldsmithATF
                 //Worldsmith stuff
                 typeof(SchemaLoader),                  //Loads the schema
 
-                typeof(ProjectTreeLister)
+                //UI Elements
+                typeof(ProjectTreeLister),
+
+                //Commands
+                typeof(ProjectCommands)
 
                 
                 );

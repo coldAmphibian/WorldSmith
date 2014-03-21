@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ProjectCommands.cs" />
     <Compile Include="DomWrappers\KVFile.cs" />
     <Compile Include="DomWrappers\Project.cs" />
     <Compile Include="DomWrappers\ProjectFolder.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="DomWrappers\DotaDataObject.cs" />
     <Compile Include="DomWrappers\DotaHero.cs" />
     <Compile Include="DomWrappers\DotaUnit.cs" />
+    <Compile Include="GlobalSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DomWrappers\ProjectFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
