@@ -54,12 +54,10 @@ namespace WorldsmithATF
                 // register UI adapters as extensions on the DOM data
 
                 // register adapters on the root to define document and editing context
-                DotaObjectsSchema.ProjectType.Type.Define(new ExtensionInfo<Project.Project>());
-                
-                
+                 
 
                 //Register the adapters for the Project object model
-                DotaObjectsSchema.ProjectType.Type.Define(new ExtensionInfo<Project.Project>());
+                DotaObjectsSchema.ProjectType.Type.Define(new ExtensionInfo<Project.AddonProject>());
                 DotaObjectsSchema.FileType.Type.Define(new ExtensionInfo<Project.ProjectFile>());
                 DotaObjectsSchema.FolderType.Type.Define(new ExtensionInfo<Project.ProjectFolder>());
                 DotaObjectsSchema.TextFileType.Type.Define(new ExtensionInfo<Project.TextFile>());

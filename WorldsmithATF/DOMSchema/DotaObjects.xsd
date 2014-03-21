@@ -7,6 +7,10 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
 
+  <xs:element name="Project" type="ProjectType" />
+
+  
+  
   <xs:complexType name="ProjectType">
     <xs:sequence>
       <xs:element name="Files" type="FileType" minOccurs="0" maxOccurs="unbounded" />
@@ -16,11 +20,16 @@
 
   <xs:complexType name ="FileType">
     <xs:attribute name="Path" type="xs:string"/>
+    <xs:attribute name ="Name" type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="FolderType">
     <xs:complexContent>
-      <xs:extension base="FileType" />       
+      <xs:extension base="FileType">
+        <xs:sequence>
+          <xs:element name="Files" type="FileType" minOccurs="0" maxOccurs ="unbounded" />
+        </xs:sequence>
+      </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 

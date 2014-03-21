@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WorldsmithATF.Project
 {
-    class Project : DomNodeAdapter
+    public class AddonProject : DomNodeAdapter
     {
-        public IEnumerable<ProjectFile> ProjectFiles
+        public IList<ProjectFile> ProjectFiles
         {
             get { return GetChildList<ProjectFile>(DotaObjectsSchema.ProjectType.FilesChild); }
         }

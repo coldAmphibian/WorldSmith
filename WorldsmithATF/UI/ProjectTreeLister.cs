@@ -9,6 +9,7 @@ using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 using Sce.Atf.Controls;
 using Sce.Atf.Controls.PropertyEditing;
+using WorldsmithATF.Project;
 
 namespace WorldsmithATF.UI
 {
@@ -49,9 +50,9 @@ namespace WorldsmithATF.UI
         private ISettingsService settings;
 
 
-        public void OpenProject(string path)
+        public void OpenProject(AddonProject project)
         {
-            TreeView = new ProjectView(path);
+            TreeView = new ProjectView(project);
         }
 
 
@@ -59,7 +60,7 @@ namespace WorldsmithATF.UI
         {
             base.Configure(out treeControl, out treeControlAdapter);
 
-            treeControl.ShowRoot = false; // UI node can't really be edited, so hide it
+            treeControl.ShowRoot = false; // hide root node, because it's the project
             treeControl.Text = Localizer.Localize("No Project Loaded");
             treeControl.Dock = DockStyle.Fill;
             treeControl.AllowDrop = true;

@@ -75,7 +75,7 @@
   <ItemGroup>
     <Compile Include="Commands\ProjectCommands.cs" />
     <Compile Include="DomWrappers\KVFile.cs" />
-    <Compile Include="DomWrappers\Project.cs" />
+    <Compile Include="DomWrappers\AddonProject.cs" />
     <Compile Include="DomWrappers\ProjectFolder.cs" />
     <Compile Include="DomWrappers\TextFile.cs" />
     <Compile Include="DOMSchema\DotaObjectsSchema.cs" />

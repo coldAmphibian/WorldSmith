@@ -1,11 +1,14 @@
 ﻿using Sce.Atf;
 using Sce.Atf.Applications;
+using Sce.Atf.Dom;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorldsmithATF.Project;
+using Sce.Atf.Adaptation;
 
 namespace WorldsmithATF.UI
 {
@@ -14,9 +17,15 @@ namespace WorldsmithATF.UI
         private string ProjectPath = "";
         private Selection<object> selection;
 
-        public ProjectView(string Path)
+        public AddonProject Addon
         {
-            ProjectPath = Path;
+            get;
+            set;
+        }
+
+        public ProjectView(AddonProject project)
+        {
+            Addon = project;
 
             selection = new Selection<object>();
             selection.Changed += new EventHandler(selection_Changed);
@@ -25,41 +34,20 @@ namespace WorldsmithATF.UI
             if (SelectionChanging == null) return;
         }
 
-        private static IEnumerable<object> GetSubDirectories(DirectoryInfo directoryInfo)
-        {
-            DirectoryInfo[] directories = null;
-            try
-            {
-                directories = directoryInfo.GetDirectories();
-            }
-            catch
-            {
-            }
-
-            IEnumerable<object> result = directories.Cast<object>().Union(directoryInfo.GetFiles().Cast<object>());
-
-            return result;
-        }
      
 
 
         #region ITreeView Members
         public IEnumerable<object> GetChildren(object parent)
-        {          
-            IEnumerable<object> result = null;
-            DirectoryInfo directoryInfo = parent as DirectoryInfo;
-            if (directoryInfo != null)
-                result = GetSubDirectories(directoryInfo); //may return null
-
-            if (result == null)
-                return EmptyEnumerable<object>.Instance;
-            return result;
+        {
+            DomNode node = parent.As<DomNode>();
+            return node.Children;
         }
 
         public object Root
         {
-            get {               
-                return new DirectoryInfo(ProjectPath); 
+            get {
+                return Addon; 
             }
         }
         #endregion
@@ -67,16 +55,22 @@ namespace WorldsmithATF.UI
         #region IItemView Members
         public void GetInfo(object item, ItemInfo info)
         {
-            DirectoryInfo directoryInfo = item as DirectoryInfo;
-            if (directoryInfo != null)
+            DomNode node = item as DomNode;
+            if(node != null)
             {
-                info.Label = directoryInfo.Name;
-                info.ImageIndex = info.GetImageList().Images.IndexOfKey(Resources.ComputerImage);
-                IEnumerable<object> directories = GetSubDirectories(directoryInfo);
+                if(node.Type == DotaObjectsSchema.FileType.Type)
+                {
+                    ProjectFile file = node.As<ProjectFile>();
+                    info.Label = file.Name;
+                    info.IsLeaf = true;
+                }
+                if(node.Type == DotaObjectsSchema.FolderType.Type)
+                {
+                    ProjectFolder folder = node.As<ProjectFolder>();
+                    info.Label = folder.Name;
+                    info.IsLeaf = false;
+                }
 
-                info.IsLeaf =
-                    directories != null &&
-                    directories.Count() == 0;
             }
         }
         #endregion

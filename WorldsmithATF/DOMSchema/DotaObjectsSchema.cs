@@ -34,18 +34,24 @@ namespace WorldsmithATF
 
             FileType.Type = getNodeType("Worldsmith", "FileType");
             FileType.PathAttribute = FileType.Type.GetAttributeInfo("Path");
+            FileType.NameAttribute = FileType.Type.GetAttributeInfo("Name");
 
             FolderType.Type = getNodeType("Worldsmith", "FolderType");
             FolderType.PathAttribute = FolderType.Type.GetAttributeInfo("Path");
+            FolderType.NameAttribute = FolderType.Type.GetAttributeInfo("Name");
+            FolderType.FilesChild = FolderType.Type.GetChildInfo("Files");
 
             TextFileType.Type = getNodeType("Worldsmith", "TextFileType");
             TextFileType.PathAttribute = TextFileType.Type.GetAttributeInfo("Path");
+            TextFileType.NameAttribute = TextFileType.Type.GetAttributeInfo("Name");
 
             KVDocumentType.Type = getNodeType("Worldsmith", "KVDocumentType");
             KVDocumentType.PathAttribute = KVDocumentType.Type.GetAttributeInfo("Path");
+            KVDocumentType.NameAttribute = KVDocumentType.Type.GetAttributeInfo("Name");
 
             MapType.Type = getNodeType("Worldsmith", "MapType");
             MapType.PathAttribute = MapType.Type.GetAttributeInfo("Path");
+            MapType.NameAttribute = MapType.Type.GetAttributeInfo("Name");
 
             DotaUnitContainerType.Type = getNodeType("Worldsmith", "DotaUnitContainerType");
             DotaUnitContainerType.ContentsChild = DotaUnitContainerType.Type.GetChildInfo("Contents");
@@ -254,6 +260,7 @@ namespace WorldsmithATF
             DotaHeroType.HUDAttribute = DotaHeroType.Type.GetAttributeInfo("HUD");
             DotaHeroType.override_heroAttribute = DotaHeroType.Type.GetAttributeInfo("override_hero");
 
+            ProjectRootElement = getRootElement(NS, "Project");
         }
 
         public static class ProjectType
@@ -267,30 +274,36 @@ namespace WorldsmithATF
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
         }
 
         public static class FolderType
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
+            public static ChildInfo FilesChild;
         }
 
         public static class TextFileType
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
         }
 
         public static class KVDocumentType
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
         }
 
         public static class MapType
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
         }
 
         public static class DotaUnitContainerType
@@ -517,5 +530,7 @@ namespace WorldsmithATF
             public static AttributeInfo HUDAttribute;
             public static AttributeInfo override_heroAttribute;
         }
+
+        public static ChildInfo ProjectRootElement;
     }
 }

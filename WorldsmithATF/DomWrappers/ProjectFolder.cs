@@ -8,5 +8,11 @@ namespace WorldsmithATF.Project
 {
     class ProjectFolder : ProjectFile
     {
+        public IList<ProjectFile> Files
+        {
+            get { return GetChildList<ProjectFile>(DotaObjectsSchema.FolderType.FilesChild); }
+        }
+
+
     }
 }
