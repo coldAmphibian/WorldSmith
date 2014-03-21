@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//Copyright © 2014 Sony Computer Entertainment America LLC. See License.txt.
+
+using System;
+using System.ComponentModel.Composition;
+using System.Windows.Forms;
 
 using Sce.Atf;
 using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 using Sce.Atf.Controls;
-using System.ComponentModel.Composition;
-using System.Windows.Forms;
-using WorldsmithATF.Project;
-
 
 namespace WorldsmithATF.UI
 {
-
     /// <summary>
-    /// Displays a tree view of the DOM data. </summary>
+    /// Displays a tree view of the DOM data. Uses the context registry to track
+    /// the active UI data as documents are opened and closed.</summary>
     [Export(typeof(IInitializable))]
     [Export(typeof(ProjectTreeLister))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    class ProjectTreeLister : TreeControlEditor, IControlHostClient, IInitializable
+    public class ProjectTreeLister : TreeControlEditor, IControlHostClient, IInitializable
     {
-
-
-         /// <summary>
+        /// <summary>
         /// Constructor</summary>
         /// <param name="commandService">Command service</param>
         /// <param name="controlHostService">Control host service</param>
@@ -36,80 +30,88 @@ namespace WorldsmithATF.UI
         public ProjectTreeLister(
             ICommandService commandService,
             IControlHostService controlHostService,
-            IContextRegistry contextRegistry,
-            IDocumentRegistry documentRegistry,
-            IDocumentService documentService)
+            IContextRegistry contextRegistry
+          )
             : base(commandService)
         {
             m_controlHostService = controlHostService;
             m_contextRegistry = contextRegistry;
-            m_documentRegistry = documentRegistry;
-
-            // the tree control always displays the contents of the active document
-            //m_documentRegistry.ActiveDocumentChanged += new EventHandler(documentRegistry_ActiveDocumentChanged);
-
-            m_documentService = documentService;
+         
         }
         private IControlHostService m_controlHostService;
         private IContextRegistry m_contextRegistry;
-        private IDocumentRegistry m_documentRegistry;
-        private IDocumentService m_documentService;
 
 
         protected override void Configure(out TreeControl treeControl, out TreeControlAdapter treeControlAdapter)
         {
             base.Configure(out treeControl, out treeControlAdapter);
 
-            treeControl.ShowRoot = false; // Project node can't really be edited, so hide it
-            treeControl.Text = Localizer.Localize(
-                "View the project in this control");
+            treeControl.ShowRoot = false; // UI node can't really be edited, so hide it
+            treeControl.Text = Localizer.Localize("No Project Loaded");
             treeControl.Dock = DockStyle.Fill;
-            treeControl.AllowDrop = false;
+            treeControl.AllowDrop = true;
             treeControl.SelectionMode = SelectionMode.MultiExtended;
         }
 
-        public void Initialize()
+        #region IControlHostClient Members
+
+        /// <summary>
+        /// Notifies the client that its Control has been activated. Activation occurs when
+        /// the Control gets focus, or a parent "host" Control gets focus.</summary>
+        /// <param name="control">Client Control that was activated</param>
+        /// <remarks>This method is only called by IControlHostService if the Control was previously
+        /// registered for this IControlHostClient.</remarks>
+        public void Activate(Control control)
+        {
+          
+        }
+
+        /// <summary>
+        /// Notifies the client that its Control has been deactivated. Deactivation occurs when
+        /// another Control or "host" Control gets focus.</summary>
+        /// <param name="control">Client Control that was deactivated</param>
+        /// <remarks>This method is only called by IControlHostService if the Control was previously
+        /// registered for this IControlHostClient.</remarks>
+        public void Deactivate(Control control)
+        {
+        }
+
+        /// <summary>
+        /// Requests permission to close the client's Control</summary>
+        /// <param name="control">Client Control to be closed</param>
+        /// <returns>True if the Control can close, or false to cancel</returns>
+        /// <remarks>
+        /// 1. This method is only called by IControlHostService if the Control was previously
+        /// registered for this IControlHostClient.
+        /// 2. If true is returned, the IControlHostService calls its own
+        /// UnregisterControl. The IControlHostClient has to call RegisterControl again
+        /// if it wants to re-register this Control.</remarks>
+        public bool Close(Control control)
+        {
+            return true;
+        }
+
+        #endregion
+
+        #region IInitializable Members
+
+        void IInitializable.Initialize()
         {
             // on initialization, register our tree control with the hosting service
             m_controlHostService.RegisterControl(
                 TreeControl,
                 new ControlInfo(
-                   Localizer.Localize("Project"),
-                   Localizer.Localize("Displays the project"),
+                   Localizer.Localize("Addon Explorer"),
+                   Localizer.Localize("Displays the current addon"),
                    StandardControlGroup.Left), // don't show close button
                this);
+
+            
         }
 
-        public void Activate(Control control)
-        {
-            // on control activation, make the UI the active context and document
-            if (TreeView != null)
-            {
-                m_contextRegistry.ActiveContext = TreeView;
-                m_documentRegistry.ActiveDocument = Adapters.As<ProjectDocument>(TreeView);
-            }
-        }
+      
 
-        public bool Close(Control control)
-        {
-            bool closed = true;
+        #endregion
 
-            // Get current document, if any
-            ProjectDocument document = Adapters.As<ProjectDocument>(TreeView);
-
-            // Check if document can be closed
-            if (document != null)
-            {
-                closed = m_documentService.Close(document);
-                if (closed)
-                    m_contextRegistry.RemoveContext(document);
-            }
-
-            return closed;  // app must be closing
-        }
-
-        public void Deactivate(Control control)
-        {            
-        }
     }
 }

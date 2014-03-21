@@ -8,7 +8,5 @@ namespace WorldsmithATF.Project
 {
     class ProjectFolder : ProjectFile
     {
-
-
     }
 }
