@@ -14,5 +14,11 @@ namespace WorldsmithATF
             set;
         }
 
+        public static string CurrentProjectDirectory
+        {
+            get;
+            set;
+        }
+
     }
 }

@@ -49,6 +49,12 @@ namespace WorldsmithATF.UI
         private ISettingsService settings;
 
 
+        public void OpenProject(string path)
+        {
+            TreeView = new ProjectView(path);
+        }
+
+
         protected override void Configure(out TreeControl treeControl, out TreeControlAdapter treeControlAdapter)
         {
             base.Configure(out treeControl, out treeControlAdapter);

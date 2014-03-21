@@ -25,7 +25,7 @@ namespace WorldsmithATF.UI
             if (SelectionChanging == null) return;
         }
 
-        private static DirectoryInfo[] GetSubDirectories(DirectoryInfo directoryInfo)
+        private static IEnumerable<object> GetSubDirectories(DirectoryInfo directoryInfo)
         {
             DirectoryInfo[] directories = null;
             try
@@ -36,8 +36,11 @@ namespace WorldsmithATF.UI
             {
             }
 
-            return directories;
+            IEnumerable<object> result = directories.Cast<object>().Union(directoryInfo.GetFiles().Cast<object>());
+
+            return result;
         }
+     
 
 
         #region ITreeView Members
@@ -69,11 +72,11 @@ namespace WorldsmithATF.UI
             {
                 info.Label = directoryInfo.Name;
                 info.ImageIndex = info.GetImageList().Images.IndexOfKey(Resources.ComputerImage);
-                DirectoryInfo[] directories = GetSubDirectories(directoryInfo);
+                IEnumerable<object> directories = GetSubDirectories(directoryInfo);
 
                 info.IsLeaf =
                     directories != null &&
-                    directories.Length == 0;
+                    directories.Count() == 0;
             }
         }
         #endregion

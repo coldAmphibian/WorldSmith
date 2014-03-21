@@ -10,6 +10,8 @@ using Sce.Atf.Adaptation;
 using Sce.Atf.Applications;
 
 using WorldsmithATF.UI;
+using System.Windows.Forms;
+using System.IO;
 
 
 namespace WorldsmithATF.Commands
@@ -79,7 +81,29 @@ namespace WorldsmithATF.Commands
 
         public void OpenProject()
         {
+            if(GlobalSettings.DotaDirectory == null)
+            {
+                MessageBox.Show("Please set the dota directory in preferences!");
+                return;
+            }
 
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = GlobalSettings.DotaDirectory + Path.DirectorySeparatorChar + "dota" +
+                Path.DirectorySeparatorChar + "addons";
+
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+
+            string folder = dialog.SelectedPath + Path.DirectorySeparatorChar;
+
+            if (!File.Exists(folder + "addoninfo.txt"))
+            {
+                MessageBox.Show("That's not an addon folder!\nSelect a folder with an addoninfo.txt", "Invalid Folder", MessageBoxButtons.OK);
+                return;
+            }
+
+           
+            projectLister.OpenProject(folder);
+           
 
         }
 
