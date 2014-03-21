@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorldsmithATF.Project
 {
-    class ProjectFolder : ProjectFile
+    public class ProjectFolder : ProjectFile
     {
         public IList<ProjectFile> Files
         {

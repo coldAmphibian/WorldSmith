@@ -114,7 +114,7 @@ namespace WorldsmithATF.Commands
             root.Name = folder.Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
            
 
-            BuildProjectFromDirectoriesRecursive(folder, ref root);
+            ProjectLoader.BuildProjectFromDirectoriesRecursive(folder, ref root);
 
 
             project.ProjectFiles.Add(root);
@@ -125,32 +125,7 @@ namespace WorldsmithATF.Commands
         }
 
 
-        public void BuildProjectFromDirectoriesRecursive(string path, ref ProjectFolder project)
-        {
-            foreach (string directory in Directory.GetDirectories(path))
-            {
-                ProjectFolder folder = (new DomNode(DotaObjectsSchema.FolderType.Type)).As<ProjectFolder>();
-                folder.Path = directory;
-                folder.Name = directory.Substring(directory.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-
-
-                project.Files.Add(folder);
-                BuildProjectFromDirectoriesRecursive(directory, ref folder);
-            }
-
-            foreach(string File in Directory.GetFiles(path))
-            {
-                string name = Path.GetFileName(File);
-                ProjectFile f = (new DomNode(DotaObjectsSchema.FileType.Type)).As<ProjectFile>();
-                f.Path = File;
-                f.Name = name;
-                
-
-                project.Files.Add(f);
-
-            }
-           
-        }
+       
 
 
         public void UpdateCommand(object commandTag, CommandState commandState)

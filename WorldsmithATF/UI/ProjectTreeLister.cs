@@ -43,7 +43,8 @@ namespace WorldsmithATF.UI
             m_controlHostService = controlHostService;
             m_contextRegistry = contextRegistry;
             this.settings = settings;
-         
+
+            this.TreeControl.ImageList = ResourceUtil.GetImageList16();
         }
         private IControlHostService m_controlHostService;
         private IContextRegistry m_contextRegistry;

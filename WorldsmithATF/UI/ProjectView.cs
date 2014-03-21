@@ -12,9 +12,9 @@ using Sce.Atf.Adaptation;
 
 namespace WorldsmithATF.UI
 {
-    class ProjectView : ITreeView, IItemView, ISelectionContext
+    class ProjectView : ITreeView, IItemView, ISelectionContext, IInitializable
     {
-        private string ProjectPath = "";
+
         private Selection<object> selection;
 
         public AddonProject Addon
@@ -32,6 +32,8 @@ namespace WorldsmithATF.UI
 
             // suppress compiler warning
             if (SelectionChanging == null) return;
+
+            
         }
 
      
@@ -57,20 +59,32 @@ namespace WorldsmithATF.UI
         {
             DomNode node = item as DomNode;
             if(node != null)
-            {
-                if(node.Type == DotaObjectsSchema.FileType.Type)
-                {
-                    ProjectFile file = node.As<ProjectFile>();
-                    info.Label = file.Name;
-                    info.IsLeaf = true;
-                }
+            {                
                 if(node.Type == DotaObjectsSchema.FolderType.Type)
                 {
                     ProjectFolder folder = node.As<ProjectFolder>();
                     info.Label = folder.Name;
                     info.IsLeaf = false;
+                    info.ImageIndex = info.GetImageList().Images.IndexOfKey(Resources.FolderIcon);
                 }
+                else
+                {
+                    //Lets figure out what it is
+                    ProjectFile file = node.As<ProjectFile>();
+                    info.Label = file.Name;
+                    info.IsLeaf = true;
 
+                    string ext = Path.GetExtension(file.Path);
+                    if(ProjectLoader.FileTypes.ContainsKey(ext))
+                    {
+                        info.ImageIndex = info.GetImageList().Images.IndexOfKey(ProjectLoader.FileTypes[ext].DisplayImageKey);
+                    }
+                    else
+                    {
+                        info.ImageIndex = info.GetImageList().Images.IndexOfKey(Resources.DataImage);
+                    }
+                    
+                }
             }
         }
         #endregion
@@ -119,5 +133,10 @@ namespace WorldsmithATF.UI
 
         #endregion
 
+
+        public void Initialize()
+        {
+            
+        }
     }
 }
