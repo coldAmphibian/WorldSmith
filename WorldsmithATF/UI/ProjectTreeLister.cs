@@ -58,24 +58,29 @@ namespace WorldsmithATF.UI
 
         public void OpenProject(AddonProject project)
         {
-            TreeView = new ProjectView(project);
-            (TreeView as ProjectView).SelectionChanged += ProjectTreeLister_SelectionChanged;
+            ProjectView pv = new ProjectView(project);
+            this.TreeControl.DoubleClick += TreeControl_DoubleClick;
+            
+      
+
+            TreeView = pv;
+
         }
 
-        void ProjectTreeLister_SelectionChanged(object sender, EventArgs e)
+        void TreeControl_DoubleClick(object sender, EventArgs e)
         {
-            ProjectView view = sender as ProjectView;
-            object selection = view.Selection.First();
+            ProjectView view = TreeView as ProjectView;
+            object selection = view.Selection.FirstOrDefault();
 
-            if(selection.Is<Project.TextFile>())
+            if (selection != null && selection.Is<Project.TextFile>())
             {
                 TextFile f = selection.As<TextFile>();
                 textEditor.OpenDocument(f.Path);
 
             }
-
         }
 
+    
 
         protected override void Configure(out TreeControl treeControl, out TreeControlAdapter treeControlAdapter)
         {
