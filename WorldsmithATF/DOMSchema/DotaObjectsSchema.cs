@@ -49,6 +49,10 @@ namespace WorldsmithATF
             KVDocumentType.PathAttribute = KVDocumentType.Type.GetAttributeInfo("Path");
             KVDocumentType.NameAttribute = KVDocumentType.Type.GetAttributeInfo("Name");
 
+            LuaDocumentType.Type = getNodeType("Worldsmith", "LuaDocumentType");
+            LuaDocumentType.PathAttribute = LuaDocumentType.Type.GetAttributeInfo("Path");
+            LuaDocumentType.NameAttribute = LuaDocumentType.Type.GetAttributeInfo("Name");
+
             MapType.Type = getNodeType("Worldsmith", "MapType");
             MapType.PathAttribute = MapType.Type.GetAttributeInfo("Path");
             MapType.NameAttribute = MapType.Type.GetAttributeInfo("Name");
@@ -260,7 +264,6 @@ namespace WorldsmithATF
             DotaHeroType.HUDAttribute = DotaHeroType.Type.GetAttributeInfo("HUD");
             DotaHeroType.override_heroAttribute = DotaHeroType.Type.GetAttributeInfo("override_hero");
 
-            ProjectRootElement = getRootElement(NS, "Project");
         }
 
         public static class ProjectType
@@ -293,6 +296,13 @@ namespace WorldsmithATF
         }
 
         public static class KVDocumentType
+        {
+            public static DomNodeType Type;
+            public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
+        }
+
+        public static class LuaDocumentType
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
@@ -530,7 +540,5 @@ namespace WorldsmithATF
             public static AttributeInfo HUDAttribute;
             public static AttributeInfo override_heroAttribute;
         }
-
-        public static ChildInfo ProjectRootElement;
     }
 }

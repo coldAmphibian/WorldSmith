@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Windows.Forms;
+using System.Linq;
 
 using Sce.Atf;
 using Sce.Atf.Adaptation;
@@ -36,13 +37,15 @@ namespace WorldsmithATF.UI
             ICommandService commandService,
             IControlHostService controlHostService,
             IContextRegistry contextRegistry,
-            ISettingsService settings
+            ISettingsService settings,
+            TextEditing.TextEditor textEditor
           )
             : base(commandService)
         {
             m_controlHostService = controlHostService;
             m_contextRegistry = contextRegistry;
             this.settings = settings;
+            this.textEditor = textEditor;
 
             this.TreeControl.ImageList = ResourceUtil.GetImageList16();
         }
@@ -50,10 +53,27 @@ namespace WorldsmithATF.UI
         private IContextRegistry m_contextRegistry;
         private ISettingsService settings;
 
+        private TextEditing.TextEditor textEditor;
+
 
         public void OpenProject(AddonProject project)
         {
             TreeView = new ProjectView(project);
+            (TreeView as ProjectView).SelectionChanged += ProjectTreeLister_SelectionChanged;
+        }
+
+        void ProjectTreeLister_SelectionChanged(object sender, EventArgs e)
+        {
+            ProjectView view = sender as ProjectView;
+            object selection = view.Selection.First();
+
+            if(selection.Is<Project.TextFile>())
+            {
+                TextFile f = selection.As<TextFile>();
+                textEditor.OpenDocument(f.Path);
+
+            }
+
         }
 
 
@@ -65,11 +85,10 @@ namespace WorldsmithATF.UI
             treeControl.Text = Localizer.Localize("No Project Loaded");
             treeControl.Dock = DockStyle.Fill;
             treeControl.AllowDrop = true;
-            treeControl.SelectionMode = SelectionMode.MultiExtended;
-
-         
+            treeControl.SelectionMode = SelectionMode.One;   
         }
 
+      
         #region IControlHostClient Members
 
         /// <summary>
@@ -126,10 +145,19 @@ namespace WorldsmithATF.UI
             BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
                 new BoundPropertyDescriptor(typeof(GlobalSettings), 
                     () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory"),
+
+                   
             };
 
             this.settings.RegisterUserSettings("Application", settings);
             this.settings.RegisterSettings(this, settings);
+
+       
+            if(GlobalSettings.CurrentProjectDirectory != null)
+            {
+                OpenProject(ProjectLoader.OpenProjectFromFolder(GlobalSettings.CurrentProjectDirectory));
+            }
+
 
         }
 

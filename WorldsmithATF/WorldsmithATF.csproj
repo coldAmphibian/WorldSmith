@@ -74,21 +74,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ProjectCommands.cs" />
-    <Compile Include="DomWrappers\KVFile.cs" />
-    <Compile Include="DomWrappers\AddonProject.cs" />
-    <Compile Include="DomWrappers\ProjectFolder.cs" />
-    <Compile Include="DomWrappers\TextFile.cs" />
+    <Compile Include="DomWrappers\Project\KVFile.cs" />
+    <Compile Include="DomWrappers\Project\AddonProject.cs" />
+    <Compile Include="DomWrappers\Project\LuaFile.cs" />
+    <Compile Include="DomWrappers\Project\ProjectFolder.cs" />
+    <Compile Include="DomWrappers\Project\TextFile.cs" />
     <Compile Include="DOMSchema\DotaObjectsSchema.cs" />
-    <Compile Include="DomWrappers\DotaBaseUnit.cs" />
-    <Compile Include="DomWrappers\DotaDataObject.cs" />
-    <Compile Include="DomWrappers\DotaHero.cs" />
-    <Compile Include="DomWrappers\DotaUnit.cs" />
+    <Compile Include="DomWrappers\Dota\DotaBaseUnit.cs" />
+    <Compile Include="DomWrappers\Dota\DotaDataObject.cs" />
+    <Compile Include="DomWrappers\Dota\DotaHero.cs" />
+    <Compile Include="DomWrappers\Dota\DotaUnit.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="DomWrappers\ProjectFile.cs" />
+    <Compile Include="DomWrappers\Project\ProjectFile.cs" />
     <Compile Include="Project\ProjectLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
+    <Compile Include="TextEditing\CodeDocument.cs" />
+    <Compile Include="TextEditing\TextEditor.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />
     <Compile Include="UI\ProjectView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

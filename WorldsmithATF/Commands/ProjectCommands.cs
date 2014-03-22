@@ -38,12 +38,14 @@ namespace WorldsmithATF.Commands
 
         ProjectTreeLister projectLister;
         ICommandService commandService;
+        ISettingsService settings;
 
         [ImportingConstructor]
-        public ProjectCommands(ProjectTreeLister project, ICommandService service)
+        public ProjectCommands(ProjectTreeLister project, ICommandService service, ISettingsService settings)
         {
             projectLister = project;
             commandService = service;
+            this.settings = settings;
         }
 
         public void Initialize()
@@ -105,22 +107,12 @@ namespace WorldsmithATF.Commands
                 MessageBox.Show("That's not an addon folder!\nSelect a folder with an addoninfo.txt", "Invalid Folder", MessageBoxButtons.OK);
                 return;
             }
-            DomNode domRoot = new DomNode(DotaObjectsSchema.ProjectType.Type);
-            AddonProject project = domRoot.As<AddonProject>();
-            project.Name = "adsf";
 
-            ProjectFolder root = (new DomNode(DotaObjectsSchema.FolderType.Type)).As<ProjectFolder>();
-            root.Path = folder;
-            root.Name = folder.Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-           
-
-            ProjectLoader.BuildProjectFromDirectoriesRecursive(folder, ref root);
-
-
-            project.ProjectFiles.Add(root);
+            AddonProject project = ProjectLoader.OpenProjectFromFolder(folder);
 
             projectLister.OpenProject(project);
-           
+
+            GlobalSettings.CurrentProjectDirectory = folder;
 
         }
 

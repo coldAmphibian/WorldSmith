@@ -62,6 +62,7 @@ namespace WorldsmithATF
                 DotaObjectsSchema.FolderType.Type.Define(new ExtensionInfo<Project.ProjectFolder>());
                 DotaObjectsSchema.TextFileType.Type.Define(new ExtensionInfo<Project.TextFile>());
                 DotaObjectsSchema.KVDocumentType.Type.Define(new ExtensionInfo<Project.KVFile>());
+                DotaObjectsSchema.LuaDocumentType.Type.Define(new ExtensionInfo<Project.LuaFile>());
 
 
                 // register adapters to define the Dota object model

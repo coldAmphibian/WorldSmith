@@ -6,10 +6,7 @@
     xmlns:mstns="http://tempuri.org/DotaObjects.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
-
-  <xs:element name="Project" type="ProjectType" />
-
-  
+ 
   
   <xs:complexType name="ProjectType">
     <xs:sequence>
@@ -40,6 +37,12 @@
   </xs:complexType>
 
   <xs:complexType name="KVDocumentType">
+    <xs:complexContent>
+      <xs:extension base="TextFileType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="LuaDocumentType">
     <xs:complexContent>
       <xs:extension base="TextFileType" />
     </xs:complexContent>

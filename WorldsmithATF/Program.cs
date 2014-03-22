@@ -42,7 +42,6 @@ namespace WorldsmithATF
                 typeof(FileDialogService),              // standard Windows file dialogs
 
                 typeof(DocumentRegistry),               // central document registry with change notification
-                typeof(AutoDocumentService),            // opens documents from last session, or creates a new document, on startup
                 typeof(RecentDocumentCommands),         // standard recent document commands in File menu
                 typeof(StandardFileCommands),           // standard File menu commands for New, Open, Save, SaveAs, Close
                 typeof(MainWindowTitleService),         // tracks document changes and updates main form title
@@ -78,8 +77,10 @@ namespace WorldsmithATF
                 typeof(ProjectTreeLister),
 
                 //Commands
-                typeof(ProjectCommands)
+                typeof(ProjectCommands),
 
+               
+                typeof(TextEditing.TextEditor)
                 
                 );
 

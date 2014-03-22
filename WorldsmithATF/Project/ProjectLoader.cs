@@ -50,13 +50,33 @@ namespace WorldsmithATF.Project
                 DisplayImageKey = Resources.DocumentImage,
             }},
             { ".lua", new FileTypeResolver() {
-                DomNodeType = DotaObjectsSchema.TextFileType.Type,
+                DomNodeType = DotaObjectsSchema.LuaDocumentType.Type,
                 DisplayName = "Lua Scriptfile",
-                WrapperType = typeof(TextFile),
+                WrapperType = typeof(LuaFile),
                 DisplayImageKey = Resources.DocumentImage,
             }},
 
         };
+
+
+        public static AddonProject OpenProjectFromFolder(string folder)
+        {
+            DomNode domRoot = new DomNode(DotaObjectsSchema.ProjectType.Type);
+            AddonProject project = domRoot.As<AddonProject>();
+            project.Name = "adsf";
+
+            ProjectFolder root = (new DomNode(DotaObjectsSchema.FolderType.Type)).As<ProjectFolder>();
+            root.Path = folder;
+            root.Name = folder.Substring(folder.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+
+
+            ProjectLoader.BuildProjectFromDirectoriesRecursive(folder, ref root);
+
+
+            project.ProjectFiles.Add(root);
+
+            return project;
+        }
 
 
         public static void BuildProjectFromDirectoriesRecursive(string path, ref ProjectFolder project)
