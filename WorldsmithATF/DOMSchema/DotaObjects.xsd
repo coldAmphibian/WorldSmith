@@ -47,6 +47,14 @@
       <xs:extension base="TextFileType" />
     </xs:complexContent>
   </xs:complexType>
+  
+  <xs:complexType name="VMTType">
+    <xs:complexContent>
+      <xs:extension base="TextFileType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+
 
   <xs:complexType name="MapType">
     <xs:complexContent>

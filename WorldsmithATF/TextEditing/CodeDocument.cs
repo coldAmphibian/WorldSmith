@@ -218,7 +218,7 @@ namespace WorldsmithATF.TextEditing
                 case ".lua":
                     return Localizer.Localize("Lua");                
                 default:
-                    throw new InvalidOperationException("invalid code path");
+                    return Localizer.Localize("Text");
             }
         }
 
@@ -236,7 +236,7 @@ namespace WorldsmithATF.TextEditing
                 case ".lua":
                     return Languages.Lua;                
                 default:
-                    throw new InvalidOperationException("invalid code path");
+                    return Languages.Text;
             }
         }
 

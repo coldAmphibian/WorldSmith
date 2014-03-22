@@ -84,6 +84,7 @@
     <Compile Include="DomWrappers\Dota\DotaDataObject.cs" />
     <Compile Include="DomWrappers\Dota\DotaHero.cs" />
     <Compile Include="DomWrappers\Dota\DotaUnit.cs" />
+    <Compile Include="DomWrappers\Project\VMTFile.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DomWrappers\Project\ProjectFile.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="TextEditing\TextEditor.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />
     <Compile Include="UI\ProjectView.cs" />
+    <Compile Include="UI\UnitTreeLister.cs" />
+    <Compile Include="UI\UnitView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

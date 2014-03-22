@@ -75,13 +75,11 @@ namespace WorldsmithATF
 
                 //UI Elements
                 typeof(ProjectTreeLister),
+                typeof(UnitTreeLister),
+                typeof(TextEditing.TextEditor),
 
                 //Commands
-                typeof(ProjectCommands),
-
-               
-                typeof(TextEditing.TextEditor)
-                
+                typeof(ProjectCommands)    
                 );
 
             // Set up the MEF container with these components

@@ -53,6 +53,10 @@ namespace WorldsmithATF
             LuaDocumentType.PathAttribute = LuaDocumentType.Type.GetAttributeInfo("Path");
             LuaDocumentType.NameAttribute = LuaDocumentType.Type.GetAttributeInfo("Name");
 
+            VMTType.Type = getNodeType("Worldsmith", "VMTType");
+            VMTType.PathAttribute = VMTType.Type.GetAttributeInfo("Path");
+            VMTType.NameAttribute = VMTType.Type.GetAttributeInfo("Name");
+
             MapType.Type = getNodeType("Worldsmith", "MapType");
             MapType.PathAttribute = MapType.Type.GetAttributeInfo("Path");
             MapType.NameAttribute = MapType.Type.GetAttributeInfo("Name");
@@ -303,6 +307,13 @@ namespace WorldsmithATF
         }
 
         public static class LuaDocumentType
+        {
+            public static DomNodeType Type;
+            public static AttributeInfo PathAttribute;
+            public static AttributeInfo NameAttribute;
+        }
+
+        public static class VMTType
         {
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;

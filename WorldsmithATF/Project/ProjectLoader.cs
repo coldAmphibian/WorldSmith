@@ -10,8 +10,12 @@ using Sce.Atf;
 
 namespace WorldsmithATF.Project
 {
+
+    public delegate void ProjectLoadedCallback(AddonProject project);
     public static class ProjectLoader
     {
+
+        public static event ProjectLoadedCallback OnProjectLoad;
 
         public class FileTypeResolver
         {
@@ -55,6 +59,12 @@ namespace WorldsmithATF.Project
                 WrapperType = typeof(LuaFile),
                 DisplayImageKey = Resources.DocumentImage,
             }},
+            { ".vmt", new FileTypeResolver() {
+                DomNodeType = DotaObjectsSchema.VMTType.Type,
+                DisplayName = "Valve Material File",
+                WrapperType = typeof(VMTFile),
+                DisplayImageKey = Resources.DocumentImage,
+            }},
 
         };
 
@@ -74,6 +84,8 @@ namespace WorldsmithATF.Project
 
 
             project.ProjectFiles.Add(root);
+
+            OnProjectLoad.Invoke(project);
 
             return project;
         }
