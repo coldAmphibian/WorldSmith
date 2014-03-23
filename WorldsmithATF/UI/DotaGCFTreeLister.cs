@@ -60,20 +60,10 @@ namespace WorldsmithATF.UI
         private Project.DotaVPKService VPKService;
 
 
-        public void OpenProject(AddonProject project)
-        {
-            ProjectView pv = new ProjectView(project);
-            this.TreeControl.DoubleClick += TreeControl_DoubleClick;
-
-
-
-            TreeView = pv;
-
-        }
 
         void TreeControl_DoubleClick(object sender, EventArgs e)
         {
-            ProjectView view = TreeView as ProjectView;
+            DotaGCFTreeView view = TreeView as DotaGCFTreeView;
             object selection = view.Selection.FirstOrDefault();
 
             if (selection != null && selection.Is<Project.TextFile>())
@@ -158,7 +148,7 @@ namespace WorldsmithATF.UI
             DotaGCFTreeView view = new DotaGCFTreeView();
             view.RootNode = folder.As<DomNode>();
             TreeView = view;
-
+            this.TreeControl.DoubleClick += TreeControl_DoubleClick;
         }
 
 

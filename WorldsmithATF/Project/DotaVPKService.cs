@@ -69,6 +69,49 @@ namespace WorldsmithATF.Project
             OpenVPK();
         }
 
+        #region Read From VPK
+        public string ReadTextFromVPK(string path)
+        {
+            IntPtr root = HLLib.hlPackageGetRoot();
+
+            IntPtr file = HLLib.hlFolderGetItemByPath(root, path, HLLib.HLFindType.HL_FIND_FILES);
+
+            IntPtr stream;
+            if(ErrorCheck(HLLib.hlPackageCreateStream(file, out stream)))
+            {
+                return "Unable to Load File";
+            }
+
+            string text = ReadTextFromHLLibStream(stream);
+
+            return text;
+
+        }
+
+
+        private static string ReadTextFromHLLibStream(IntPtr Stream)
+        {
+            HLLib.HLFileMode mode = HLLib.HLFileMode.HL_MODE_READ;
+
+            if(ErrorCheck(HLLib.hlStreamOpen(Stream, (uint)mode)))
+            {
+                return "Unable to Load File";
+            }
+
+            StringBuilder str = new StringBuilder();
+
+            char ch;
+            while (HLLib.hlStreamReadChar(Stream, out ch))
+            {
+                str.Append(ch);
+            }
+
+            HLLib.hlStreamClose(Stream);
+
+            return str.ToString();
+        }
+        #endregion
+
         #region OpenVPK
         public static void OpenVPK()
         {
@@ -79,7 +122,7 @@ namespace WorldsmithATF.Project
             HLLib.HLPackageType PackageType = HLLib.hlGetPackageTypeFromName(path);
 
             HLLib.HLFileMode OpenMode = HLLib.HLFileMode.HL_MODE_READ |
-                HLLib.HLFileMode.HL_MODE_QUICK_FILEMAPPING |
+                //HLLib.HLFileMode.HL_MODE_QUICK_FILEMAPPING |
                 HLLib.HLFileMode.HL_MODE_VOLATILE;
 
             uint PackageID;
@@ -94,14 +137,15 @@ namespace WorldsmithATF.Project
 
 
 
-        public static void ErrorCheck(bool ret)
+        public static bool ErrorCheck(bool ret)
         {
             if (!ret)
             {
                 MessageBox.Show("Error reading pak01_dir.vpk.\n\n The error reported was: " + HLLib.hlGetString(HLLib.HLOption.HL_ERROR_LONG_FORMATED), "Error opening .pak", MessageBoxButtons.OK);
-                Shutdown();
+                return true;
 
             }
+            return false;
         }
 
         public static void Shutdown()
@@ -116,7 +160,7 @@ namespace WorldsmithATF.Project
             ProjectFolder folder = (new DomNode(DotaObjectsSchema.FolderType.Type)).As<ProjectFolder>();
 
             folder.Name = "root";
-            folder.Path = "root/";
+            folder.Path = "root";
             folder.InGCF = true;
            
             IntPtr root = HLLib.hlPackageGetRoot();

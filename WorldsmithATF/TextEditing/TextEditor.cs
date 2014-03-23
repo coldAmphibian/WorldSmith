@@ -77,7 +77,7 @@ namespace WorldsmithATF.TextEditing
             string ext = System.IO.Path.GetExtension(path);
 
             DocumentClient cl = new DocumentClient(this, ext);
-            cl.Open(new Uri(path), file.InGCF);
+            cl.Open(path, file.InGCF);
 
             return cl;
 
@@ -404,7 +404,7 @@ namespace WorldsmithATF.TextEditing
                 return doc;
             }
 
-            public IDocument OpenFromVPK(Uri uri)
+            public IDocument OpenFromVPK(string uri)
             {
                 VPKDocument doc = new VPKDocument(uri, m_editor.vpkService);
                 doc.Read();
@@ -417,7 +417,7 @@ namespace WorldsmithATF.TextEditing
                 return doc;
             }
 
-            public IDocument Open(Uri uri, bool fromVPK)
+            public IDocument Open(string uri, bool fromVPK)
             {
                 if(fromVPK)
                 {
@@ -425,7 +425,7 @@ namespace WorldsmithATF.TextEditing
                 }
                 else
                 {
-                    return Open(uri);
+                    return Open(new Uri(uri));
                 }
             }
 

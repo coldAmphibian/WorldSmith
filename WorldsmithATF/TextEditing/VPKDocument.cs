@@ -20,7 +20,7 @@ namespace WorldsmithATF.TextEditing
         /// <summary>
         /// Constructor</summary>
         /// <param name="uri">URI of document</param>
-        public VPKDocument(Uri uri, DotaVPKService vpkService)
+        public VPKDocument(string uri, DotaVPKService vpkService)
         {
             if (uri == null)
                 throw new ArgumentNullException("uri");
@@ -29,7 +29,7 @@ namespace WorldsmithATF.TextEditing
 
             m_uri = uri;
 
-            string filePath = uri.LocalPath;
+            string filePath = uri;
             string fileName = Path.GetFileName(filePath);
 
             m_type = GetDocumentType(fileName);
@@ -86,28 +86,16 @@ namespace WorldsmithATF.TextEditing
         /// Reads document data from stream</summary>
         public void Read()
         {
-            
-
-            string filePath = m_uri.LocalPath;
-            if (File.Exists(filePath))
-            {
-                using (StreamReader stream = new StreamReader(filePath, Encoding.UTF8))
-                {
-                    m_editor.Text = stream.ReadToEnd();
-                    m_editor.Dirty = false;
-                }
-            }
+            string filePath = m_uri;
+            m_editor.Text = vpkService.ReadTextFromVPK(filePath);
+            m_editor.Dirty = false;
+            m_editor.ReadOnly = true;           
         }
         /// <summary>
         /// Writes document data to stream</summary>
         public void Write()
         {
-            string filePath = m_uri.LocalPath;
-            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
-            {
-                writer.Write(m_editor.Text);
-                m_editor.Dirty = false;
-            }
+           //Do Nothing
         }
 
         #region IDocument Members
@@ -116,7 +104,7 @@ namespace WorldsmithATF.TextEditing
         /// Gets whether the document is read-only</summary>
         public bool IsReadOnly
         {
-            get { return m_editor.ReadOnly; }
+            get { return true; } //Everything from the VPK is read-only since we cannot modify the VPK. 
         }
 
         /// <summary>
@@ -167,24 +155,11 @@ namespace WorldsmithATF.TextEditing
         /// Gets or sets the resource URI</summary>
         public Uri Uri
         {
-            get { return m_uri; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-
-                if (value != m_uri)
-                {
-                    Uri oldUri = m_uri;
-                    m_uri = value;
-
-                    UpdateControlInfo();
-
-                    OnUriChanged(new UriChangedEventArgs(oldUri));
-                }
-            }
+            get { return new Uri("C:\\"); }
+            set { }
+            
         }
-        private Uri m_uri;
+        private string m_uri;
 
         /// <summary>
         /// Event that is raised after the resource's URI changes</summary>
