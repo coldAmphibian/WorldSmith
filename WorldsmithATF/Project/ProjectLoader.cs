@@ -68,7 +68,30 @@ namespace WorldsmithATF.Project
                 WrapperType = typeof(VMTFile),
                 DisplayImageKey = Resources.DocumentImage,
             }},
-
+            { ".cfg", new FileTypeResolver() {
+                DomNodeType = DotaObjectsSchema.TextFileType.Type,
+                DisplayName = "Config File",
+                WrapperType = typeof(TextFile),
+                DisplayImageKey = Resources.DocumentImage
+            }},
+            { ".lst", new FileTypeResolver() {
+                DomNodeType = DotaObjectsSchema.KVDocumentType.Type,
+                DisplayName = "List File",
+                WrapperType = typeof(KVFile),
+                DisplayImageKey = Resources.DocumentImage
+            }},
+            { ".rc", new FileTypeResolver() {
+                DomNodeType = DotaObjectsSchema.TextFileType.Type,
+                DisplayName = "Resource Config File",
+                WrapperType = typeof(TextFile),
+                DisplayImageKey = Resources.DocumentImage
+            }},
+            { ".res", new FileTypeResolver() {
+                DomNodeType = DotaObjectsSchema.TextFileType.Type,
+                DisplayName = "Resource File",
+                WrapperType = typeof(TextFile),
+                DisplayImageKey = Resources.DocumentImage
+            }},
         };
 
         #region Addon Project
