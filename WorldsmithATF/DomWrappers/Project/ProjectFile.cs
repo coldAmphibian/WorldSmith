@@ -10,6 +10,11 @@ namespace WorldsmithATF.Project
 {
     public class ProjectFile : DomNodeAdapter
     {
+        public ProjectFile()
+        {
+            
+        }
+
         public string Path
         {
             get { return GetAttribute<string>(DotaObjectsSchema.FileType.PathAttribute); }
@@ -20,6 +25,12 @@ namespace WorldsmithATF.Project
         {
             get { return GetAttribute<string>(DotaObjectsSchema.FileType.NameAttribute); }
             set { SetAttribute(DotaObjectsSchema.FileType.NameAttribute, value); }
+        }
+
+        public bool InGCF
+        {
+            get { return GetAttribute<bool>(DotaObjectsSchema.FileType.InGCFAttribute); }
+            set { SetAttribute(DotaObjectsSchema.FileType.InGCFAttribute, value); }
         }
 
     }

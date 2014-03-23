@@ -18,6 +18,7 @@
   <xs:complexType name ="FileType">
     <xs:attribute name="Path" type="xs:string"/>
     <xs:attribute name ="Name" type="xs:string" />
+    <xs:attribute name="InGCF" type="xs:boolean" default="false" />
   </xs:complexType>
 
   <xs:complexType name="FolderType">
@@ -53,9 +54,7 @@
       <xs:extension base="TextFileType" />
     </xs:complexContent>
   </xs:complexType>
-
-
-
+  
   <xs:complexType name="MapType">
     <xs:complexContent>
       <xs:extension base="FileType" />

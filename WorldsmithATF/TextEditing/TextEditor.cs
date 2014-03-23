@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Sce.Atf;
 using Sce.Atf.Applications;
+using WorldsmithATF.Project;
 
 namespace WorldsmithATF.TextEditing
 {
@@ -27,7 +28,8 @@ namespace WorldsmithATF.TextEditing
             IControlHostService controlHostService,
             IDocumentService documentService,
             IDocumentRegistry documentRegistry,
-            IFileDialogService fileDialogService
+            IFileDialogService fileDialogService,
+            DotaVPKService vpkService
             )
         {
             m_commandService = commandService;
@@ -35,7 +37,7 @@ namespace WorldsmithATF.TextEditing
             m_documentService = documentService;
             m_documentRegistry = documentRegistry;
             m_fileDialogService = fileDialogService;
-
+            this.vpkService = vpkService;
             // create a document client for each file type
             m_txtDocumentClient = new DocumentClient(this, ".txt");           
             m_luaDocumentClient = new DocumentClient(this, ".lua");          
@@ -54,6 +56,8 @@ namespace WorldsmithATF.TextEditing
         [Export(typeof(IDocumentClient))]
         private DocumentClient m_luaDocumentClient;
 
+        private DotaVPKService vpkService;
+
       
 
         /// <summary>
@@ -66,12 +70,14 @@ namespace WorldsmithATF.TextEditing
             return new DocumentClient(this, extension);
         }
 
-        public IDocumentClient OpenDocument(string path)
+        public IDocumentClient OpenDocument(Project.TextFile file)
         {
+            string path = file.Path;
+
             string ext = System.IO.Path.GetExtension(path);
 
             DocumentClient cl = new DocumentClient(this, ext);
-            cl.Open(new Uri(path));
+            cl.Open(new Uri(path), file.InGCF);
 
             return cl;
 
@@ -396,6 +402,31 @@ namespace WorldsmithATF.TextEditing
                     m_editor);
 
                 return doc;
+            }
+
+            public IDocument OpenFromVPK(Uri uri)
+            {
+                VPKDocument doc = new VPKDocument(uri, m_editor.vpkService);
+                doc.Read();
+
+                m_editor.m_controlHostService.RegisterControl(
+                    doc.Control,
+                    doc.ControlInfo,
+                    m_editor);
+
+                return doc;
+            }
+
+            public IDocument Open(Uri uri, bool fromVPK)
+            {
+                if(fromVPK)
+                {
+                    return OpenFromVPK(uri);
+                }
+                else
+                {
+                    return Open(uri);
+                }
             }
 
             public void Show(IDocument document)

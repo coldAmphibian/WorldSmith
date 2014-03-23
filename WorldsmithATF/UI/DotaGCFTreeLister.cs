@@ -11,6 +11,7 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls;
 using Sce.Atf.Controls.PropertyEditing;
 using WorldsmithATF.Project;
+using Sce.Atf.Dom;
 
 namespace WorldsmithATF.UI
 {
@@ -38,7 +39,8 @@ namespace WorldsmithATF.UI
             IControlHostService controlHostService,
             IContextRegistry contextRegistry,
             ISettingsService settings,
-            TextEditing.TextEditor textEditor
+            TextEditing.TextEditor textEditor,
+            Project.DotaVPKService vpkService
           )
             : base(commandService)
         {
@@ -46,6 +48,7 @@ namespace WorldsmithATF.UI
             m_contextRegistry = contextRegistry;
             this.settings = settings;
             this.textEditor = textEditor;
+            this.VPKService = vpkService;
 
             this.TreeControl.ImageList = ResourceUtil.GetImageList16();
         }
@@ -54,6 +57,7 @@ namespace WorldsmithATF.UI
         private ISettingsService settings;
 
         private TextEditing.TextEditor textEditor;
+        private Project.DotaVPKService VPKService;
 
 
         public void OpenProject(AddonProject project)
@@ -75,7 +79,7 @@ namespace WorldsmithATF.UI
             if (selection != null && selection.Is<Project.TextFile>())
             {
                 TextFile f = selection.As<TextFile>();
-                textEditor.OpenDocument(f.Path);
+                textEditor.OpenDocument(f);
 
             }
         }
@@ -91,6 +95,8 @@ namespace WorldsmithATF.UI
             treeControl.Dock = DockStyle.Fill;
             treeControl.AllowDrop = true;
             treeControl.SelectionMode = SelectionMode.One;
+
+          
         }
 
 
@@ -147,23 +153,11 @@ namespace WorldsmithATF.UI
                    StandardControlGroup.Left), // don't show close button
                this);
 
-            BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
-                new BoundPropertyDescriptor(typeof(GlobalSettings), 
-                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory"),
+            Project.ProjectFolder folder = VPKService.BuildDotaVPKNode();
 
-                   
-            };
-
-            this.settings.RegisterUserSettings("Application", settings);
-            this.settings.RegisterSettings(this, settings);
-
-            SettingsService service = this.settings as SettingsService;
-            service.LoadSettings();
-            if(GlobalSettings.DotaDirectory == null)
-            {
-                MessageBox.Show("Your Dota 2 directory is not set.  Please set it now");
-                this.settings.PresentUserSettings(null);
-            }
+            DotaGCFTreeView view = new DotaGCFTreeView();
+            view.RootNode = folder.As<DomNode>();
+            TreeView = view;
 
         }
 

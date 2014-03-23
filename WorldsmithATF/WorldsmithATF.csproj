@@ -89,11 +89,13 @@
     <Compile Include="HLLib\HLLib.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DomWrappers\Project\ProjectFile.cs" />
+    <Compile Include="Project\DotaVPKService.cs" />
     <Compile Include="Project\ProjectLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="TextEditing\CodeDocument.cs" />
     <Compile Include="TextEditing\TextEditor.cs" />
+    <Compile Include="TextEditing\VPKDocument.cs" />
     <Compile Include="UI\DotaGCFTreeLister.cs" />
     <Compile Include="UI\DotaGCFTreeView.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />

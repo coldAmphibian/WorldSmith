@@ -35,31 +35,38 @@ namespace WorldsmithATF
             FileType.Type = getNodeType("Worldsmith", "FileType");
             FileType.PathAttribute = FileType.Type.GetAttributeInfo("Path");
             FileType.NameAttribute = FileType.Type.GetAttributeInfo("Name");
+            FileType.InGCFAttribute = FileType.Type.GetAttributeInfo("InGCF");
 
             FolderType.Type = getNodeType("Worldsmith", "FolderType");
             FolderType.PathAttribute = FolderType.Type.GetAttributeInfo("Path");
             FolderType.NameAttribute = FolderType.Type.GetAttributeInfo("Name");
+            FolderType.InGCFAttribute = FolderType.Type.GetAttributeInfo("InGCF");
             FolderType.FilesChild = FolderType.Type.GetChildInfo("Files");
 
             TextFileType.Type = getNodeType("Worldsmith", "TextFileType");
             TextFileType.PathAttribute = TextFileType.Type.GetAttributeInfo("Path");
             TextFileType.NameAttribute = TextFileType.Type.GetAttributeInfo("Name");
+            TextFileType.InGCFAttribute = TextFileType.Type.GetAttributeInfo("InGCF");
 
             KVDocumentType.Type = getNodeType("Worldsmith", "KVDocumentType");
             KVDocumentType.PathAttribute = KVDocumentType.Type.GetAttributeInfo("Path");
             KVDocumentType.NameAttribute = KVDocumentType.Type.GetAttributeInfo("Name");
+            KVDocumentType.InGCFAttribute = KVDocumentType.Type.GetAttributeInfo("InGCF");
 
             LuaDocumentType.Type = getNodeType("Worldsmith", "LuaDocumentType");
             LuaDocumentType.PathAttribute = LuaDocumentType.Type.GetAttributeInfo("Path");
             LuaDocumentType.NameAttribute = LuaDocumentType.Type.GetAttributeInfo("Name");
+            LuaDocumentType.InGCFAttribute = LuaDocumentType.Type.GetAttributeInfo("InGCF");
 
             VMTType.Type = getNodeType("Worldsmith", "VMTType");
             VMTType.PathAttribute = VMTType.Type.GetAttributeInfo("Path");
             VMTType.NameAttribute = VMTType.Type.GetAttributeInfo("Name");
+            VMTType.InGCFAttribute = VMTType.Type.GetAttributeInfo("InGCF");
 
             MapType.Type = getNodeType("Worldsmith", "MapType");
             MapType.PathAttribute = MapType.Type.GetAttributeInfo("Path");
             MapType.NameAttribute = MapType.Type.GetAttributeInfo("Name");
+            MapType.InGCFAttribute = MapType.Type.GetAttributeInfo("InGCF");
 
             DotaUnitContainerType.Type = getNodeType("Worldsmith", "DotaUnitContainerType");
             DotaUnitContainerType.ContentsChild = DotaUnitContainerType.Type.GetChildInfo("Contents");
@@ -282,6 +289,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
         }
 
         public static class FolderType
@@ -289,6 +297,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
             public static ChildInfo FilesChild;
         }
 
@@ -297,6 +306,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
         }
 
         public static class KVDocumentType
@@ -304,6 +314,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
         }
 
         public static class LuaDocumentType
@@ -311,6 +322,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
         }
 
         public static class VMTType
@@ -318,6 +330,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
         }
 
         public static class MapType
@@ -325,6 +338,7 @@ namespace WorldsmithATF
             public static DomNodeType Type;
             public static AttributeInfo PathAttribute;
             public static AttributeInfo NameAttribute;
+            public static AttributeInfo InGCFAttribute;
         }
 
         public static class DotaUnitContainerType

@@ -78,7 +78,7 @@ namespace WorldsmithATF.UI
             if (selection != null && selection.Is<Project.TextFile>())
             {
                 TextFile f = selection.As<TextFile>();
-                textEditor.OpenDocument(f.Path);
+                textEditor.OpenDocument(f);
 
             }
         }

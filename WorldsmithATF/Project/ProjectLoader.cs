@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sce.Atf;
+using System.Windows.Forms;
+
 
 namespace WorldsmithATF.Project
 {
@@ -15,6 +17,7 @@ namespace WorldsmithATF.Project
     public static class ProjectLoader
     {
 
+       
         public static event ProjectLoadedCallback OnProjectLoad;
 
         public class FileTypeResolver
@@ -68,7 +71,7 @@ namespace WorldsmithATF.Project
 
         };
 
-
+        #region Addon Project
         public static AddonProject OpenProjectFromFolder(string folder)
         {
             DomNode domRoot = new DomNode(DotaObjectsSchema.ProjectType.Type);
@@ -115,7 +118,7 @@ namespace WorldsmithATF.Project
             {
 
                 string ext = Path.GetExtension(File);
-                 ProjectFile f;
+                ProjectFile f;
                 if(FileTypes.ContainsKey(ext))
                 {
                     FileTypeResolver resolver = FileTypes[ext];
@@ -135,10 +138,9 @@ namespace WorldsmithATF.Project
                 project.Files.Add(f);
 
             }
-            
+
         }
-
-
+        #endregion
 
 
 

@@ -23,7 +23,7 @@ namespace WorldsmithATF.UI
             set;
         }
 
-        public DotaGCFTreeView(AddonProject project)
+        public DotaGCFTreeView()
         {
            
             selection = new Selection<object>();

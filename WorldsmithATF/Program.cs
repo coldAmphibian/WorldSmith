@@ -71,7 +71,8 @@ namespace WorldsmithATF
                 typeof(DomExplorer),                    //Debug view the DOM
 
                 //Worldsmith stuff
-                typeof(SchemaLoader),                  //Loads the schema
+                typeof(SchemaLoader),                   //Loads the schema
+                typeof(Project.DotaVPKService),         //Handles the VPK stuff, including reading from the VPK and building the DOM node
 
                 //UI Elements
                 typeof(ProjectTreeLister),
