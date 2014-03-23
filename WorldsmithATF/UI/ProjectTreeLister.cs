@@ -48,6 +48,8 @@ namespace WorldsmithATF.UI
             this.textEditor = textEditor;
 
             this.TreeControl.ImageList = ResourceUtil.GetImageList16();
+
+           
         }
         private IControlHostService m_controlHostService;
         private IContextRegistry m_contextRegistry;
@@ -57,13 +59,12 @@ namespace WorldsmithATF.UI
 
 
         public void OpenProject(AddonProject project)
-        {
-            ProjectView pv = new ProjectView(project);
-            this.TreeControl.DoubleClick += TreeControl_DoubleClick;
-            
-      
+        {           
 
-            TreeView = pv;
+            ProjectView pv = TreeView as ProjectView;
+            pv.Addon = project;
+
+            TreeView = pv; //When changing the root node, it doesn't update unless I do this.  No idea why
 
             SettingsService service = this.settings as SettingsService;
             service.SaveSettings();
@@ -158,8 +159,10 @@ namespace WorldsmithATF.UI
                    
             };
 
-            this.settings.RegisterUserSettings("Application", settings);
             this.settings.RegisterSettings(this, settings);
+
+            TreeView = new ProjectView();
+            this.TreeControl.DoubleClick += TreeControl_DoubleClick;
 
             SettingsService service = this.settings as SettingsService;
             service.LoadSettings();
@@ -168,7 +171,7 @@ namespace WorldsmithATF.UI
                 OpenProject(ProjectLoader.OpenProjectFromFolder(GlobalSettings.CurrentProjectDirectory));
             }
 
-
+           
         }
 
       

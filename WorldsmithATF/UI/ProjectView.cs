@@ -23,9 +23,9 @@ namespace WorldsmithATF.UI
             set;
         }
 
-        public ProjectView(AddonProject project)
+        public ProjectView()
         {
-            Addon = project;
+            Addon = new DomNode(DotaObjectsSchema.ProjectType.Type).As<AddonProject>();
 
             selection = new Selection<object>();
             selection.Changed += new EventHandler(selection_Changed);
