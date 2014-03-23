@@ -18,12 +18,12 @@ namespace WorldsmithATF.UI
     /// Displays a tree view of the DOM data. Uses the context registry to track
     /// the active UI data as documents are opened and closed.</summary>
     [Export(typeof(IInitializable))]
-    [Export(typeof(ProjectTreeLister))]
+    [Export(typeof(DotaGCFTreeLister))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class ProjectTreeLister : TreeControlEditor, IControlHostClient, IInitializable
+    public class DotaGCFTreeLister : TreeControlEditor, IControlHostClient, IInitializable
     {
 
-        
+
 
         /// <summary>
         /// Constructor</summary>
@@ -33,7 +33,7 @@ namespace WorldsmithATF.UI
         /// <param name="documentRegistry">Document registry</param>
         /// <param name="documentService">Document service</param>
         [ImportingConstructor]
-        public ProjectTreeLister(
+        public DotaGCFTreeLister(
             ICommandService commandService,
             IControlHostService controlHostService,
             IContextRegistry contextRegistry,
@@ -60,13 +60,10 @@ namespace WorldsmithATF.UI
         {
             ProjectView pv = new ProjectView(project);
             this.TreeControl.DoubleClick += TreeControl_DoubleClick;
-            
-      
+
+
 
             TreeView = pv;
-
-            SettingsService service = this.settings as SettingsService;
-            service.SaveSettings();
 
         }
 
@@ -83,20 +80,20 @@ namespace WorldsmithATF.UI
             }
         }
 
-    
+
 
         protected override void Configure(out TreeControl treeControl, out TreeControlAdapter treeControlAdapter)
         {
             base.Configure(out treeControl, out treeControlAdapter);
 
             treeControl.ShowRoot = false; // hide root node, because it's the project
-            treeControl.Text = Localizer.Localize("No Project Loaded");
+            treeControl.Text = Localizer.Localize("Dota 2 directory not set");
             treeControl.Dock = DockStyle.Fill;
             treeControl.AllowDrop = true;
-            treeControl.SelectionMode = SelectionMode.One;   
+            treeControl.SelectionMode = SelectionMode.One;
         }
 
-      
+
         #region IControlHostClient Members
 
         /// <summary>
@@ -107,7 +104,7 @@ namespace WorldsmithATF.UI
         /// registered for this IControlHostClient.</remarks>
         public void Activate(Control control)
         {
-          
+
         }
 
         /// <summary>
@@ -145,15 +142,14 @@ namespace WorldsmithATF.UI
             m_controlHostService.RegisterControl(
                 TreeControl,
                 new ControlInfo(
-                   Localizer.Localize("Addon Explorer"),
-                   Localizer.Localize("Displays the current addon"),
+                   Localizer.Localize("Dota Game File Explorer"),
+                   Localizer.Localize("Displays the built in dota files"),
                    StandardControlGroup.Left), // don't show close button
                this);
 
-
             BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
                 new BoundPropertyDescriptor(typeof(GlobalSettings), 
-                    () => GlobalSettings.CurrentProjectDirectory, "Current Project Directory", "Paths", "Path to current addon project.  Dont mess with this"),
+                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory"),
 
                    
             };
@@ -163,15 +159,15 @@ namespace WorldsmithATF.UI
 
             SettingsService service = this.settings as SettingsService;
             service.LoadSettings();
-            if(GlobalSettings.CurrentProjectDirectory != null)
+            if(GlobalSettings.DotaDirectory == null)
             {
-                OpenProject(ProjectLoader.OpenProjectFromFolder(GlobalSettings.CurrentProjectDirectory));
+                MessageBox.Show("Your Dota 2 directory is not set.  Please set it now");
+                this.settings.PresentUserSettings(null);
             }
-
 
         }
 
-      
+
 
         #endregion
 

@@ -86,6 +86,7 @@
     <Compile Include="DomWrappers\Dota\DotaUnit.cs" />
     <Compile Include="DomWrappers\Project\VMTFile.cs" />
     <Compile Include="GlobalSettings.cs" />
+    <Compile Include="HLLib\HLLib.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="DomWrappers\Project\ProjectFile.cs" />
     <Compile Include="Project\ProjectLoader.cs" />
@@ -93,6 +94,8 @@
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="TextEditing\CodeDocument.cs" />
     <Compile Include="TextEditing\TextEditor.cs" />
+    <Compile Include="UI\DotaGCFTreeLister.cs" />
+    <Compile Include="UI\DotaGCFTreeView.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />
     <Compile Include="UI\ProjectView.cs" />
     <Compile Include="UI\UnitTreeLister.cs" />
@@ -133,7 +136,14 @@
   <ItemGroup>
     <None Include="Resources\WSIcon32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="HLLib\HLLib.x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HLLib\HLLib.x86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

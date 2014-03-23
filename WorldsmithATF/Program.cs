@@ -77,6 +77,7 @@ namespace WorldsmithATF
                 typeof(ProjectTreeLister),
                 typeof(UnitTreeLister),
                 typeof(TextEditing.TextEditor),
+                typeof(DotaGCFTreeLister),
 
                 //Commands
                 typeof(ProjectCommands)    

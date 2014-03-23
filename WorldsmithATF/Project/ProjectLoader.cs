@@ -85,8 +85,15 @@ namespace WorldsmithATF.Project
 
             project.ProjectFiles.Add(root);
 
-            OnProjectLoad.Invoke(project);
+            GlobalSettings.CurrentProjectDirectory = folder;
 
+            if(OnProjectLoad != null)
+            {
+                OnProjectLoad.Invoke(project);
+            }
+            
+
+            
             return project;
         }
 
