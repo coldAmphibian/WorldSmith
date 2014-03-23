@@ -40,7 +40,9 @@ namespace WorldsmithATF.TextEditing
             this.vpkService = vpkService;
             // create a document client for each file type
             m_txtDocumentClient = new DocumentClient(this, ".txt");           
-            m_luaDocumentClient = new DocumentClient(this, ".lua");          
+            m_luaDocumentClient = new DocumentClient(this, ".lua");    
+      
+            
 
         }
 
@@ -78,7 +80,8 @@ namespace WorldsmithATF.TextEditing
 
             DocumentClient cl = new DocumentClient(this, ext);
             cl.Open(path, file.InGCF);
-
+            
+            
             return cl;
 
         }
@@ -107,7 +110,7 @@ namespace WorldsmithATF.TextEditing
                 StandardCommandGroup.EditOther,
                 "Find and Replace...",
                 "Find and replace text",
-                Keys.None,
+                Keys.Control | Keys.F,
                 Resources.FindImage,
                 CommandVisibility.Menu,
                 this);
@@ -118,7 +121,7 @@ namespace WorldsmithATF.TextEditing
                 StandardCommandGroup.EditOther,
                 "Go to...",
                 "Go to line",
-                Keys.None,
+                Keys.Control | Keys.G,
                 null,
                 CommandVisibility.Menu,
                 this);
@@ -395,6 +398,7 @@ namespace WorldsmithATF.TextEditing
             {
                 CodeDocument doc = new CodeDocument(uri);
                 doc.Read();
+                
 
                 m_editor.m_controlHostService.RegisterControl(
                     doc.Control,

@@ -32,32 +32,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Atf.Atgi">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Atgi.dll</HintPath>
+    <Reference Include="Atf.Atgi, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Atgi.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.Collada">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Collada.dll</HintPath>
+    <Reference Include="Atf.Collada, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Collada.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.Core">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Core.dll</HintPath>
+    <Reference Include="Atf.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.Gui">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Gui.dll</HintPath>
+    <Reference Include="Atf.Gui, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Gui.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.Gui.OpenGL">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Gui.OpenGL.dll</HintPath>
+    <Reference Include="Atf.Gui.OpenGL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Gui.OpenGL.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.Gui.WinForms">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Gui.WinForms.dll</HintPath>
+    <Reference Include="Atf.Gui.WinForms, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Gui.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.Gui.Wpf">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.Gui.Wpf.dll</HintPath>
+    <Reference Include="Atf.Gui.Wpf, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.Gui.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.IronPython">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.IronPython.dll</HintPath>
+    <Reference Include="Atf.IronPython, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.IronPython.dll</HintPath>
     </Reference>
-    <Reference Include="Atf.SyntaxEditorControl">
-      <HintPath>D:\Code\ATF\lib\anycpu_dotnet_clr4_release\Atf.SyntaxEditorControl.dll</HintPath>
+    <Reference Include="Atf.SyntaxEditorControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\Atf.SyntaxEditorControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
