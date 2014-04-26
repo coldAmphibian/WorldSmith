@@ -8,28 +8,38 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls.SyntaxEditorControl;
 using WorldsmithATF.Project;
 
-namespace WorldsmithATF.TextEditing
+namespace WorldsmithATF.Documents
 {
     /// <summary>
     /// Adapts the CodeDocument to IDocument and synchronizes URI and dirty bit changes to the
     /// ControlInfo instance used to register the viewing control in the UI</summary>
-    public class VPKDocument : IDocument
+    public class CodeDocument : IDocument
     {
-        DotaVPKService vpkService;
+        
+        public DotaVPKService vpkService;
+
+        public bool FromVPK
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Constructor</summary>
         /// <param name="uri">URI of document</param>
-        public VPKDocument(string uri, DotaVPKService vpkService)
+        public CodeDocument(Uri uri) : this(uri, false)
+        {
+          
+        }
+
+        public CodeDocument(Uri uri, bool fromVPK)
         {
             if (uri == null)
                 throw new ArgumentNullException("uri");
 
-            this.vpkService = vpkService;
-
             m_uri = uri;
 
-            string filePath = uri;
+            string filePath = uri.LocalPath;
             string fileName = Path.GetFileName(filePath);
 
             m_type = GetDocumentType(fileName);
@@ -49,6 +59,8 @@ namespace WorldsmithATF.TextEditing
             // in control header,  which is not desirable for documents that have the same name 
             // but located at different directories.
             m_controlInfo.IsDocument = true;
+
+            FromVPK = fromVPK;
         }
 
         private void editor_EditorTextChanged(object sender, EditorTextChangedEventArgs e)
@@ -86,16 +98,53 @@ namespace WorldsmithATF.TextEditing
         /// Reads document data from stream</summary>
         public void Read()
         {
-            string filePath = m_uri;
+            if(FromVPK)
+            {
+                ReadFromVPK();
+            }
+            else
+            {
+                ReadFromHD();
+            }
+        }
+
+        private void ReadFromHD()
+        {
+            string filePath = m_uri.LocalPath;
+            if (File.Exists(filePath))
+            {
+                using (StreamReader stream = new StreamReader(filePath, Encoding.UTF8))
+                {
+                    m_editor.Text = stream.ReadToEnd();
+                    m_editor.Dirty = false;
+                }
+            }
+        }
+
+        private void ReadFromVPK()
+        {
+            string filePath = m_uri.GetComponents(UriComponents.Path, UriFormat.Unescaped);
             m_editor.Text = vpkService.ReadTextFromVPK(filePath);
             m_editor.Dirty = false;
             m_editor.ReadOnly = true;           
         }
+
         /// <summary>
         /// Writes document data to stream</summary>
         public void Write()
         {
-           //Do Nothing
+            if (!FromVPK)
+                WriteToHD();
+        }
+
+        private void WriteToHD()
+        {
+            string filePath = m_uri.LocalPath;
+            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
+            {
+                writer.Write(m_editor.Text);
+                m_editor.Dirty = false;
+            }
         }
 
         #region IDocument Members
@@ -104,7 +153,7 @@ namespace WorldsmithATF.TextEditing
         /// Gets whether the document is read-only</summary>
         public bool IsReadOnly
         {
-            get { return true; } //Everything from the VPK is read-only since we cannot modify the VPK. 
+            get { return m_editor.ReadOnly; }
         }
 
         /// <summary>
@@ -155,11 +204,24 @@ namespace WorldsmithATF.TextEditing
         /// Gets or sets the resource URI</summary>
         public Uri Uri
         {
-            get { return new Uri("C:\\"); }
-            set { }
-            
+            get { return m_uri; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+
+                if (value != m_uri)
+                {
+                    Uri oldUri = m_uri;
+                    m_uri = value;
+
+                    UpdateControlInfo();
+
+                    OnUriChanged(new UriChangedEventArgs(oldUri));
+                }
+            }
         }
-        private string m_uri;
+        private Uri m_uri;
 
         /// <summary>
         /// Event that is raised after the resource's URI changes</summary>
@@ -196,9 +258,9 @@ namespace WorldsmithATF.TextEditing
             switch (extension)
             {
                 case ".txt":
-                    return Localizer.Localize("Text");
+                    return Localizer.Localize("Text");              
                 case ".lua":
-                    return Localizer.Localize("Lua");
+                    return Localizer.Localize("Lua");                
                 default:
                     return Localizer.Localize("Text");
             }
@@ -214,9 +276,9 @@ namespace WorldsmithATF.TextEditing
             switch (extension)
             {
                 case ".txt":
-                    return Languages.Text;
+                    return Languages.Text;                
                 case ".lua":
-                    return Languages.Lua;
+                    return Languages.Lua;                
                 default:
                     return Languages.Text;
             }

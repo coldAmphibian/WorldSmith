@@ -37,8 +37,10 @@ namespace WorldsmithATF
                 typeof(CommandService),                 // handles commands in menus and toolbars
                 typeof(ControlHostService),             // docking control host
                 typeof(AtfUsageLogger),                 // logs computer info to an ATF server
-                //typeof(CrashLogger),                    // logs unhandled exceptions to an ATF server
-                //typeof(UnhandledExceptionService),      // catches unhandled exceptions, displays info, and gives user a chance to save
+#if !DEBUG
+                typeof(CrashLogger),                    // logs unhandled exceptions to an ATF server
+                typeof(UnhandledExceptionService),      // catches unhandled exceptions, displays info, and gives user a chance to save
+#endif
                 typeof(FileDialogService),              // standard Windows file dialogs
 
                 typeof(DocumentRegistry),               // central document registry with change notification
@@ -78,7 +80,7 @@ namespace WorldsmithATF
                 typeof(ProjectTreeLister),
                 typeof(UnitTreeLister),
                 typeof(TextEditing.TextEditor),
-                typeof(DotaGCFTreeLister),
+                typeof(DotaVPKTreeLister),
 
                 //Commands
                 typeof(ProjectCommands)    

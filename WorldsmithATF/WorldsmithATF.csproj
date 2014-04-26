@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ProjectCommands.cs" />
+    <Compile Include="Documents\KVDocument.cs" />
     <Compile Include="DomWrappers\Project\KVFile.cs" />
     <Compile Include="DomWrappers\Project\AddonProject.cs" />
     <Compile Include="DomWrappers\Project\LuaFile.cs" />
@@ -102,11 +103,9 @@
     <Compile Include="Project\ProjectLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
-    <Compile Include="TextEditing\CodeDocument.cs" />
+    <Compile Include="Documents\CodeDocument.cs" />
     <Compile Include="TextEditing\TextEditor.cs" />
-    <Compile Include="TextEditing\VPKDocument.cs" />
-    <Compile Include="UI\DotaGCFTreeLister.cs" />
-    <Compile Include="UI\DotaGCFTreeView.cs" />
+    <Compile Include="UI\DotaVPKTreeLister.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />
     <Compile Include="UI\ProjectView.cs" />
     <Compile Include="UI\UnitTreeLister.cs" />

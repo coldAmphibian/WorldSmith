@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Sce.Atf;
 using Sce.Atf.Applications;
 using WorldsmithATF.Project;
+using WorldsmithATF.Documents;
 
 namespace WorldsmithATF.TextEditing
 {
@@ -79,7 +80,12 @@ namespace WorldsmithATF.TextEditing
             string ext = System.IO.Path.GetExtension(path);
 
             DocumentClient cl = new DocumentClient(this, ext);
-            cl.Open(path, file.InGCF);
+            if(file.InGCF)
+            {
+                //Formatting the path for use with the Uri class
+                path = "VPK:\\" + path;
+            }
+            cl.Open(new Uri(path), file.InGCF);
             
             
             return cl;
@@ -396,41 +402,26 @@ namespace WorldsmithATF.TextEditing
 
             public IDocument Open(Uri uri)
             {
+                return Open(uri, false);
+            }
+
+            public IDocument Open(Uri uri, bool fromVPK)
+            {
                 CodeDocument doc = new CodeDocument(uri);
-                doc.Read();
-                
-
-                m_editor.m_controlHostService.RegisterControl(
-                    doc.Control,
-                    doc.ControlInfo,
-                    m_editor);
-
-                return doc;
-            }
-
-            public IDocument OpenFromVPK(string uri)
-            {
-                VPKDocument doc = new VPKDocument(uri, m_editor.vpkService);
-                doc.Read();
-
-                m_editor.m_controlHostService.RegisterControl(
-                    doc.Control,
-                    doc.ControlInfo,
-                    m_editor);
-
-                return doc;
-            }
-
-            public IDocument Open(string uri, bool fromVPK)
-            {
                 if(fromVPK)
                 {
-                    return OpenFromVPK(uri);
+                    doc.FromVPK = true;
+                    doc.vpkService = m_editor.vpkService;
                 }
-                else
-                {
-                    return Open(new Uri(uri));
-                }
+                doc.Read();
+
+
+                m_editor.m_controlHostService.RegisterControl(
+                    doc.Control,
+                    doc.ControlInfo,
+                    m_editor);
+
+                return doc;
             }
 
             public void Show(IDocument document)
@@ -459,6 +450,9 @@ namespace WorldsmithATF.TextEditing
             }
 
             #endregion
+
+
+          
         }
 
         private ICommandService m_commandService;

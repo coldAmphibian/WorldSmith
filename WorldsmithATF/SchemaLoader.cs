@@ -1,5 +1,6 @@
 ﻿using Sce.Atf;
 using Sce.Atf.Dom;
+using Sce.Atf.Adaptation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,7 +54,8 @@ namespace WorldsmithATF
 
                 // register UI adapters as extensions on the DOM data
 
-                // register adapters on the root to define document and editing context
+                // Register adapters for the Documents
+                
                  
 
                 //Register the adapters for the Project object model

@@ -19,9 +19,9 @@ namespace WorldsmithATF.UI
     /// Displays a tree view of the DOM data. Uses the context registry to track
     /// the active UI data as documents are opened and closed.</summary>
     [Export(typeof(IInitializable))]
-    [Export(typeof(DotaGCFTreeLister))]
+    [Export(typeof(DotaVPKTreeLister))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public class DotaGCFTreeLister : TreeControlEditor, IControlHostClient, IInitializable
+    public class DotaVPKTreeLister : TreeControlEditor, IControlHostClient, IInitializable
     {
 
 
@@ -34,7 +34,7 @@ namespace WorldsmithATF.UI
         /// <param name="documentRegistry">Document registry</param>
         /// <param name="documentService">Document service</param>
         [ImportingConstructor]
-        public DotaGCFTreeLister(
+        public DotaVPKTreeLister(
             ICommandService commandService,
             IControlHostService controlHostService,
             IContextRegistry contextRegistry,
@@ -63,7 +63,7 @@ namespace WorldsmithATF.UI
 
         void TreeControl_DoubleClick(object sender, EventArgs e)
         {
-            DotaGCFTreeView view = TreeView as DotaGCFTreeView;
+            ProjectView view = TreeView as ProjectView;
             object selection = view.Selection.FirstOrDefault();
 
             if (selection != null && selection.Is<Project.TextFile>())
@@ -145,8 +145,8 @@ namespace WorldsmithATF.UI
 
             Project.ProjectFolder folder = VPKService.BuildDotaVPKNode();
 
-            DotaGCFTreeView view = new DotaGCFTreeView();
-            view.RootNode = folder.As<DomNode>();
+            ProjectView view = new ProjectView();
+            view.Root = folder.As<DomNode>();
             TreeView = view;
             this.TreeControl.DoubleClick += TreeControl_DoubleClick;
         }

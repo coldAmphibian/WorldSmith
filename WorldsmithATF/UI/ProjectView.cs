@@ -17,15 +17,11 @@ namespace WorldsmithATF.UI
 
         private Selection<object> selection;
 
-        public AddonProject Addon
-        {
-            get;
-            set;
-        }
+       
 
         public ProjectView()
         {
-            Addon = new DomNode(DotaObjectsSchema.ProjectType.Type).As<AddonProject>();
+            Root = new DomNode(DotaObjectsSchema.FolderType.Type).As<ProjectFolder>();
 
             selection = new Selection<object>();
             selection.Changed += new EventHandler(selection_Changed);
@@ -48,9 +44,8 @@ namespace WorldsmithATF.UI
 
         public object Root
         {
-            get {
-                return Addon; 
-            }
+            get;
+            set;
         }
         #endregion
 

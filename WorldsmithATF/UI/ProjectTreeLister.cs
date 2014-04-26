@@ -62,7 +62,7 @@ namespace WorldsmithATF.UI
         {           
 
             ProjectView pv = TreeView as ProjectView;
-            pv.Addon = project;
+            pv.Root = project;
 
             TreeView = pv; //When changing the root node, it doesn't update unless I do this.  No idea why
 
