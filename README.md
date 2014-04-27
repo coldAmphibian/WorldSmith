@@ -12,6 +12,7 @@ Like this project? Want to help?  Here are a few ideas:
 
 * If you can, please [Donate] to keep the project running.  
 * If you can program, I appreciate pull requests.  Please see the pull request guidelines below.
+    * Features that need to be worked on are located in the [Milestones](https://github.com/RoyAwesome/WorldSmith/wiki/TODO-Milestones) wiki page
 * If you can help translate Worldsmith, please get in contact with me or submit a pull request. 
 * Tell the world about Worldsmith.  
 
