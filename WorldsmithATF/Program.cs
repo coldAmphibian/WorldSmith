@@ -40,7 +40,9 @@ namespace WorldsmithATF
 #if !DEBUG
                 typeof(CrashLogger),                    // logs unhandled exceptions to an ATF server
                 typeof(UnhandledExceptionService),      // catches unhandled exceptions, displays info, and gives user a chance to save
+                
 #endif
+                typeof(DomExplorer),                    //Debug view the DOM
                 typeof(FileDialogService),              // standard Windows file dialogs
 
                 typeof(DocumentRegistry),               // central document registry with change notification
@@ -70,7 +72,7 @@ namespace WorldsmithATF
                 typeof(AtfScriptVariables),             // exposes common ATF services as script variables
                 typeof(AutomationService),               // provides facilities to run an automated script using the .NET remoting service
 
-                typeof(DomExplorer),                    //Debug view the DOM
+               
 
                 //Worldsmith stuff
                 typeof(SchemaLoader),                   //Loads the schema
@@ -81,6 +83,7 @@ namespace WorldsmithATF
                 typeof(UnitTreeLister),
                 typeof(TextEditing.TextEditor),
                 typeof(DotaVPKTreeLister),
+               // typeof(UnitPropertyEditor),
 
                 //Commands
                 typeof(ProjectCommands)    

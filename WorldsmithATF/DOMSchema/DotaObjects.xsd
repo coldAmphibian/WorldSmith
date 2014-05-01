@@ -16,8 +16,17 @@
   </xs:complexType>
 
   <xs:complexType name ="FileType">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.editors menuText="Reference" description="File Editing Reference"
+                          image="" category="Files" />
+        <scea.dom.editors.attribute name="Path" displayName="Path" description="Path to the resource on disk" isreadonly="true" />
+        <scea.dom.editors.attribute name="Name" displayName="Name" description="Name of the resource" />
+        <scea.dom.editors.attribute name="InGCF" displayName="InVPK" description="Determines if the resource is int he VPK" />
+      </xs:appinfo>
+    </xs:annotation>
     <xs:attribute name="Path" type="xs:string"/>
-    <xs:attribute name ="Name" type="xs:string" />
+    <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="InGCF" type="xs:boolean" default="false" />
   </xs:complexType>
 
@@ -44,6 +53,13 @@
   </xs:complexType>
 
   <xs:complexType name="LuaDocumentType">
+    <xs:annotation>
+      <xs:appinfo>
+        <scea.dom.editors.attribute name="Path" displayName="Path" description="Path to the resource on disk" />
+        <scea.dom.editors.attribute name="Name" displayName="Name" description="Name of the resource" />
+        <scea.dom.editors.attribute name="InGCF" displayName="InVPK" description="Determines if the resource is int he VPK" />
+      </xs:appinfo>
+    </xs:annotation>
     <xs:complexContent>
       <xs:extension base="TextFileType" />
     </xs:complexContent>

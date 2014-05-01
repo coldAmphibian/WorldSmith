@@ -73,22 +73,28 @@ namespace WorldsmithATF.TextEditing
             return new DocumentClient(this, extension);
         }
 
-        public IDocumentClient OpenDocument(Project.TextFile file)
-        {
-            string path = file.Path;
+        public IDocument OpenDocument(Project.TextFile file)
+        {   
+             string path = file.Path;
 
-            string ext = System.IO.Path.GetExtension(path);
-
-            DocumentClient cl = new DocumentClient(this, ext);
             if(file.InGCF)
             {
                 //Formatting the path for use with the Uri class
                 path = "VPK:\\" + path;
             }
-            cl.Open(new Uri(path), file.InGCF);
-            
-            
-            return cl;
+            Uri uri = new Uri(path);
+            IDocument cl = m_documentRegistry.GetDocument(uri);
+            if (cl != null) return cl;
+
+           
+            string ext = System.IO.Path.GetExtension(path);
+
+            if(ext == ".lua")
+            {
+                return m_luaDocumentClient.Open(uri, file.InGCF);
+            }
+          
+            return m_txtDocumentClient.Open(uri, file.InGCF);;           
 
         }
 

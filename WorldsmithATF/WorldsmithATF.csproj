@@ -95,6 +95,7 @@
     <Compile Include="DomWrappers\Dota\DotaHero.cs" />
     <Compile Include="DomWrappers\Dota\DotaUnit.cs" />
     <Compile Include="DomWrappers\Project\VMTFile.cs" />
+    <Compile Include="DotaEditingContext.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="HLLib\HLLib.cs" />
     <Compile Include="Program.cs" />
@@ -104,10 +105,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="Documents\CodeDocument.cs" />
-    <Compile Include="TextEditing\TextEditor.cs" />
+    <Compile Include="UI\TextEditor.cs" />
     <Compile Include="UI\DotaVPKTreeLister.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />
     <Compile Include="UI\ProjectView.cs" />
+    <Compile Include="UI\UnitPropertyEditor.cs" />
     <Compile Include="UI\UnitTreeLister.cs" />
     <Compile Include="UI\UnitView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -153,6 +155,9 @@
     <Content Include="HLLib\HLLib.x86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TextEditing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

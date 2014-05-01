@@ -11,6 +11,7 @@ using Sce.Atf.Applications;
 using Sce.Atf.Controls;
 using Sce.Atf.Controls.PropertyEditing;
 using WorldsmithATF.Project;
+using Sce.Atf.Dom;
 
 namespace WorldsmithATF.UI
 {
@@ -170,10 +171,14 @@ namespace WorldsmithATF.UI
             {
                 OpenProject(ProjectLoader.OpenProjectFromFolder(GlobalSettings.CurrentProjectDirectory));
             }
-
+            (TreeView as ProjectView).SelectionChanged += view_SelectionChanged;
            
         }
 
+        private void view_SelectionChanged(object sender, EventArgs e)
+        {
+            m_contextRegistry.ActiveContext = (TreeView as ProjectView).Selection.FirstOrDefault().As<DomNode>();
+        }
       
 
         #endregion

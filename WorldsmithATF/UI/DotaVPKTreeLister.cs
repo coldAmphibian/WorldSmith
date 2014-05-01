@@ -149,7 +149,25 @@ namespace WorldsmithATF.UI
             view.Root = folder.As<DomNode>();
             TreeView = view;
             this.TreeControl.DoubleClick += TreeControl_DoubleClick;
+            view.SelectionChanged +=view_SelectionChanged;
         }
+
+        private void view_SelectionChanged(object sender, EventArgs e)
+        {
+            var obj = (TreeView as ProjectView).Selection.FirstOrDefault();
+            obj.As<DomNode>().InitializeExtensions();
+            m_contextRegistry.ActiveContext = obj.As<DomNode>();
+            exp.Root = obj.As<DomNode>();
+
+           //property.PropertyGrid.Bind(obj.As<DomNode>());
+
+        }
+
+        [Import]
+        DomExplorer exp = null;
+
+        [Import]
+        PropertyEditor property = null;
 
 
 

@@ -167,6 +167,7 @@ namespace WorldsmithATF.Project
 
             RecursiveBuildFromVPK(ref folder, root);
 
+            folder.As<DomNode>().InitializeExtensions();
 
             return folder;
         }

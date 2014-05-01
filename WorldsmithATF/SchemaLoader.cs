@@ -14,6 +14,7 @@ using System.Xml.Schema;
 using WorldsmithATF.ObjectTypes;
 
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
+using Sce.Atf.Controls.PropertyEditing;
 
 namespace WorldsmithATF
 {
@@ -73,6 +74,15 @@ namespace WorldsmithATF
                 DotaObjectsSchema.DotaBaseUnitType.Type.Define(new ExtensionInfo<DotaBaseUnit>());
                 DotaObjectsSchema.DotaUnitType.Type.Define(new ExtensionInfo<DotaUnit>());
                 DotaObjectsSchema.DotaHeroType.Type.Define(new ExtensionInfo<DotaHero>());
+
+                //Register the EditingContext
+                DotaObjectsSchema.ProjectType.Type.Define(new ExtensionInfo<DotaEditingContext>());
+                DotaObjectsSchema.FileType.Type.Define(new ExtensionInfo<DotaEditingContext>());
+                DotaObjectsSchema.FolderType.Type.Define(new ExtensionInfo<DotaEditingContext>());
+                DotaObjectsSchema.TextFileType.Type.Define(new ExtensionInfo<DotaEditingContext>());
+                DotaObjectsSchema.KVDocumentType.Type.Define(new ExtensionInfo<DotaEditingContext>());
+                DotaObjectsSchema.LuaDocumentType.Type.Define(new ExtensionInfo<DotaEditingContext>());
+                DotaObjectsSchema.VMTType.Type.Define(new ExtensionInfo<DotaEditingContext>());
 
                 break; //Only one namespace
             }
