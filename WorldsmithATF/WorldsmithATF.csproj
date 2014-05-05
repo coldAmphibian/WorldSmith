@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\ProjectCommands.cs" />
+    <Compile Include="Commands\TreeListCommands.cs" />
     <Compile Include="Documents\KVDocument.cs" />
     <Compile Include="DomWrappers\Project\KVFile.cs" />
     <Compile Include="DomWrappers\Project\AddonProject.cs" />

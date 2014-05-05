@@ -12,6 +12,8 @@ using Sce.Atf.Controls;
 using Sce.Atf.Controls.PropertyEditing;
 using WorldsmithATF.Project;
 using Sce.Atf.Dom;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace WorldsmithATF.UI
 {
@@ -43,6 +45,7 @@ namespace WorldsmithATF.UI
           )
             : base(commandService)
         {
+            this.commandService = commandService;
             m_controlHostService = controlHostService;
             m_contextRegistry = contextRegistry;
             this.settings = settings;
@@ -52,11 +55,16 @@ namespace WorldsmithATF.UI
 
            
         }
+
+        private ICommandService commandService;
         private IControlHostService m_controlHostService;
         private IContextRegistry m_contextRegistry;
         private ISettingsService settings;
 
         private TextEditing.TextEditor textEditor;
+
+        [ImportMany]
+        private IEnumerable<Lazy<IContextMenuCommandProvider>> commandMenuProviders = null;
 
 
         public void OpenProject(AddonProject project)
@@ -172,7 +180,24 @@ namespace WorldsmithATF.UI
                 OpenProject(ProjectLoader.OpenProjectFromFolder(GlobalSettings.CurrentProjectDirectory));
             }
             (TreeView as ProjectView).SelectionChanged += view_SelectionChanged;
+
+            TreeControl.MouseUp += TreeControl_MouseUp;
            
+        }
+
+        void TreeControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                TreeControl control = sender as TreeControl;
+
+                IEnumerable<object> commands = commandMenuProviders.GetCommands(null, null);
+
+                Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
+
+                commandService.RunContextMenu(commands, screenPoint);
+
+            }
         }
 
         private void view_SelectionChanged(object sender, EventArgs e)

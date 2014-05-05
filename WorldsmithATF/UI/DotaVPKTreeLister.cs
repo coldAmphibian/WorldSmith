@@ -12,6 +12,8 @@ using Sce.Atf.Controls;
 using Sce.Atf.Controls.PropertyEditing;
 using WorldsmithATF.Project;
 using Sce.Atf.Dom;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace WorldsmithATF.UI
 {
@@ -44,6 +46,7 @@ namespace WorldsmithATF.UI
           )
             : base(commandService)
         {
+            this.commandService = commandService;
             m_controlHostService = controlHostService;
             m_contextRegistry = contextRegistry;
             this.settings = settings;
@@ -52,6 +55,7 @@ namespace WorldsmithATF.UI
 
             this.TreeControl.ImageList = ResourceUtil.GetImageList16();
         }
+        private ICommandService commandService;
         private IControlHostService m_controlHostService;
         private IContextRegistry m_contextRegistry;
         private ISettingsService settings;
@@ -59,7 +63,8 @@ namespace WorldsmithATF.UI
         private TextEditing.TextEditor textEditor;
         private Project.DotaVPKService VPKService;
 
-
+        [ImportMany]
+        private IEnumerable<Lazy<IContextMenuCommandProvider>> commandMenuProviders;
 
         void TreeControl_DoubleClick(object sender, EventArgs e)
         {
@@ -150,6 +155,22 @@ namespace WorldsmithATF.UI
             TreeView = view;
             this.TreeControl.DoubleClick += TreeControl_DoubleClick;
             view.SelectionChanged +=view_SelectionChanged;
+            this.TreeControl.MouseUp += TreeControl_MouseUp;
+        }
+
+        void TreeControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                TreeControl control = sender as TreeControl;
+
+                IEnumerable<object> commands = commandMenuProviders.GetCommands(null, null);
+
+                Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
+
+                commandService.RunContextMenu(commands, screenPoint);
+                
+            }
         }
 
         private void view_SelectionChanged(object sender, EventArgs e)

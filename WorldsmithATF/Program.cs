@@ -86,7 +86,8 @@ namespace WorldsmithATF
                // typeof(UnitPropertyEditor),
 
                 //Commands
-                typeof(ProjectCommands)    
+                typeof(ProjectCommands),
+                typeof(TreeListCommands)
                 );
 
             // Set up the MEF container with these components

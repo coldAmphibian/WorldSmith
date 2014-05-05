@@ -28,8 +28,7 @@ namespace WorldsmithATF.UI
 
             // suppress compiler warning
             if (SelectionChanging == null) return;
-
-            
+           
         }
 
      
