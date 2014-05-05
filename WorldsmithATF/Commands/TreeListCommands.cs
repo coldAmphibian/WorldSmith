@@ -125,18 +125,18 @@ namespace WorldsmithATF.Commands
 
         private void DeleteFile()
         {
-
+            //TODO: Delete the file from the disk and remove it's entry from the project dom tree
         }
 
         private void RenameFile()
         {
-
+            //TODO: Rename files in the tree view
         }
 
 
         public void UpdateCommand(object commandTag, CommandState commandState)
         {
-           
+           //This function intentionally left blank
         }
 
        
