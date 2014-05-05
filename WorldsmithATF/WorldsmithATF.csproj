@@ -68,6 +68,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Atf.SyntaxEditorControl.dll</HintPath>
     </Reference>
+    <Reference Include="KVLib">
+      <HintPath>..\Libs\KVLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
