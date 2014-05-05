@@ -32,7 +32,7 @@ namespace WorldsmithATF.Commands
         ICommandService commandService;
 
         [Import(AllowDefault=false)]
-        TextEditing.TextEditor textEditor;
+        TextEditing.TextEditor textEditor = null;
 
 
         [ImportingConstructor]
@@ -48,29 +48,29 @@ namespace WorldsmithATF.Commands
             commandService.RegisterCommand(TreeListCommandsEnum.OpenEditor,
                 null,
                 null,
-                "Open",
-                "Open the file in an editor",
+                "Open".Localize(),
+                "Open the file in an editor".Localize(),
                 this);
 
             commandService.RegisterCommand(TreeListCommandsEnum.OpenSource,
                 null,
                 null,
-                "View Source",
-                "Open the file in an text editor",
+                "View Source".Localize(),
+                "Open the file in an text editor".Localize(),
                 this);
 
             commandService.RegisterCommand(TreeListCommandsEnum.Rename,
             null,
             null,
-            "Rename",
-            "Renames the file",
+            "Rename".Localize(),
+            "Renames the file".Localize(),
             this);
 
             commandService.RegisterCommand(TreeListCommandsEnum.Delete,
             null,
             null,
-            "Delete",
-            "Deletes the file",
+            "Delete".Localize(),
+            "Deletes the file".Localize(),
             this);
         }
 

@@ -163,7 +163,7 @@ namespace WorldsmithATF.UI
 
             BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
                 new BoundPropertyDescriptor(typeof(GlobalSettings), 
-                    () => GlobalSettings.CurrentProjectDirectory, "Current Project Directory", "Paths", "Path to current addon project.  Dont mess with this"),
+                    () => GlobalSettings.CurrentProjectDirectory, "Current Project Directory".Localize(), "Paths".Localize(), "Path to current addon project.  Dont mess with this".Localize()),
 
                    
             };

@@ -41,7 +41,7 @@ namespace WorldsmithATF.Project
 
             BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
                 new BoundPropertyDescriptor(typeof(GlobalSettings), 
-                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory", new FolderUriEditor(), null),
+                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory".Localize(), "Paths".Localize(), "Path to dota 2 directory".Localize(), new FolderUriEditor(), null),
 
                    
             };
@@ -58,14 +58,14 @@ namespace WorldsmithATF.Project
             //if it's *still* not set, force the user to set it
             if (GlobalSettings.DotaDirectory == null)
             {
-                MessageBox.Show("Your Dota 2 directory is not set.  Please set it now");
+                MessageBox.Show("Your Dota 2 directory is not set.  Please set it now".Localize());
                 settingsService.PresentUserSettings(null);
             }
 
             //Make damn sure that the dota directory is set correctly
             while (!File.Exists(GlobalSettings.DotaDirectory + Path.DirectorySeparatorChar + VPKPath))
             {
-                MessageBox.Show("This does not appear to be your Dota 2 directory.  Please set the dota 2 path to your 'steamapps/common/dota 2[ beta]' directory");
+                MessageBox.Show("This does not appear to be your Dota 2 directory.  Please set the dota 2 path to your 'steamapps/common/dota 2[ beta]' directory".Localize());
                 settingsService.PresentUserSettings(null);
             }
 
@@ -82,7 +82,7 @@ namespace WorldsmithATF.Project
             IntPtr stream;
             if(ErrorCheck(HLLib.hlPackageCreateStream(file, out stream)))
             {
-                return "Unable to Load File";
+                return "Unable to Load File".Localize();
             }
 
             string text = ReadTextFromHLLibStream(stream);
@@ -98,7 +98,7 @@ namespace WorldsmithATF.Project
 
             if(ErrorCheck(HLLib.hlStreamOpen(Stream, (uint)mode)))
             {
-                return "Unable to Load File";
+                return "Unable to Load File".Localize();
             }
 
             StringBuilder str = new StringBuilder();
@@ -144,7 +144,7 @@ namespace WorldsmithATF.Project
         {
             if (!ret)
             {
-                MessageBox.Show("Error reading pak01_dir.vpk.\n\n The error reported was: " + HLLib.hlGetString(HLLib.HLOption.HL_ERROR_LONG_FORMATED), "Error opening .pak", MessageBoxButtons.OK);
+                MessageBox.Show("Error reading pak01_dir.vpk.\n\n The error reported was: ".Localize() + HLLib.hlGetString(HLLib.HLOption.HL_ERROR_LONG_FORMATED), "Error opening .pak".Localize(), MessageBoxButtons.OK);
                 return true;
 
             }

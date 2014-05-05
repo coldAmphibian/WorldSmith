@@ -53,15 +53,15 @@ namespace WorldsmithATF.Commands
             commandService.RegisterCommand(ProjectCommandTags.CreateNewProject,
                 StandardMenu.File,
                 StandardCommandGroup.FileNew,
-                "New Addon",
-                "Create a new Addon",
+                "New Addon".Localize(),
+                "Create a new Addon".Localize(),
                 this);
 
             commandService.RegisterCommand(ProjectCommandTags.OpenProject,
                 StandardMenu.File,
                 StandardCommandGroup.FileNew,
-                "Open Addon",
-                "Open an addon in your Dota directory",
+                "Open Addon".Localize(),
+                "Open an addon in your Dota directory".Localize(),
                 this);
 
 
@@ -90,7 +90,7 @@ namespace WorldsmithATF.Commands
         {
             if(GlobalSettings.DotaDirectory == null)
             {
-                MessageBox.Show("Please set the dota directory in preferences!");
+                MessageBox.Show("Please set the dota directory in preferences!".Localize());
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace WorldsmithATF.Commands
 
             if (!File.Exists(folder +Path.DirectorySeparatorChar + "addoninfo.txt"))
             {
-                MessageBox.Show("That's not an addon folder!\nSelect a folder with an addoninfo.txt", "Invalid Folder", MessageBoxButtons.OK);
+                MessageBox.Show("That's not an addon folder!\nSelect a folder with an addoninfo.txt".Localize(), "Invalid Folder".Localize(), MessageBoxButtons.OK);
                 return;
             }
 
