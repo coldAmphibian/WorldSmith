@@ -34,6 +34,9 @@ namespace WorldsmithATF.Commands
         [Import(AllowDefault=false)]
         TextEditing.TextEditor textEditor = null;
 
+        [Import(AllowDefault=false)]
+        UI.KeyValueEditor kvEditor = null;
+
 
         [ImportingConstructor]
         public TreeListCommands(ICommandService service, IContextRegistry context)
@@ -123,7 +126,7 @@ namespace WorldsmithATF.Commands
             if(kvFile != null)
             {
                 //Open the file in a Key-Value editor
-
+                kvEditor.OpenKVDocument(kvFile);
                 return;
             }
 

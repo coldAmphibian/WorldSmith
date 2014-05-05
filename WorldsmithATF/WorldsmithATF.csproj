@@ -110,6 +110,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaLoader.cs" />
     <Compile Include="Documents\CodeDocument.cs" />
+    <Compile Include="UI\KeyValueEditor.cs" />
     <Compile Include="UI\TextEditor.cs" />
     <Compile Include="UI\DotaVPKTreeLister.cs" />
     <Compile Include="UI\ProjectTreeLister.cs" />

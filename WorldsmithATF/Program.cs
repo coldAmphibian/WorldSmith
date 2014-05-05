@@ -83,6 +83,7 @@ namespace WorldsmithATF
                 typeof(UnitTreeLister),
                 typeof(TextEditing.TextEditor),
                 typeof(DotaVPKTreeLister),
+                typeof(KeyValueEditor),
                // typeof(UnitPropertyEditor),
 
                 //Commands

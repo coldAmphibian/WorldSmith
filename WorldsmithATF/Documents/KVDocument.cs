@@ -1,5 +1,8 @@
 ﻿using KVLib;
 using Sce.Atf;
+using Sce.Atf.Dom;
+using Sce.Atf.Applications;
+using Sce.Atf.Controls.PropertyEditing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,30 +15,48 @@ namespace WorldsmithATF.Documents
 {
     class KVDocument : IDocument
     {
-
-        public KVDocument(KVFile file)
+        public ControlInfo ControlInfo
         {
-           
-            string path = file.Path;
-
-            if(file.InGCF)
-            {
-                path = "VPK:/" + path;
-            }
-            Uri = new Uri(path);
-
-            IsReadOnly = file.InGCF;
-
-            LoadKeyValuesFromFile(file);
+            get;
+            set;
         }
 
-        private void LoadKeyValuesFromFile(KVFile file)
+        public PropertyGrid PropertyGrid
         {
-            string path = file.Path;
+            get;
+            set;
+        }
 
+
+        public KVDocument(Uri file)
+        {        
+            string path = file.GetComponents(UriComponents.Path, UriFormat.Unescaped);
+
+            bool inVPK = file.GetComponents(UriComponents.Scheme, UriFormat.Unescaped) == "vpk";
+
+           
+            Uri = new Uri(path);
+
+            IsReadOnly = inVPK;
+
+            LoadKeyValuesFromFile(path, inVPK);
+
+            string filename = Path.GetFileName(path);
+
+            ControlInfo = new ControlInfo(filename, Uri.ToString(), StandardControlGroup.Center);
+            ControlInfo.IsDocument = true;
+
+            PropertyGrid = new PropertyGrid();
+
+            
+        }
+
+        private void LoadKeyValuesFromFile(string path, bool InVpk)
+        {
+         
             string text = "";
 
-            if(file.InGCF)
+            if (InVpk)
             {
                 text = DotaVPKService.Instance.ReadTextFromVPK(path);
             }
@@ -104,5 +125,11 @@ namespace WorldsmithATF.Documents
         }
 
         public event EventHandler<UriChangedEventArgs> UriChanged;
+
+
+        public void Save()
+        {
+
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace WorldsmithATF.Documents
 
             m_editor.EditorTextChanged += editor_EditorTextChanged;
 
-            m_controlInfo = new ControlInfo(fileName, filePath, StandardControlGroup.Center);
+            m_controlInfo = new ControlInfo(fileName + " (source)", filePath, StandardControlGroup.Center);
             // tell ControlHostService this control should be considered a document in the menu, 
             // and using the full path of the document for menu text to avoid adding a number in the end 
             // in control header,  which is not desirable for documents that have the same name 
