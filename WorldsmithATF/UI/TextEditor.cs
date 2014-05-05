@@ -73,7 +73,7 @@ namespace WorldsmithATF.TextEditing
             return new DocumentClient(this, extension);
         }
 
-        public IDocument OpenDocument(Project.TextFile file)
+        public IDocument OpenDocument(Project.TextFile file, bool sourceTag = false)
         {   
              string path = file.Path;
 
@@ -94,7 +94,7 @@ namespace WorldsmithATF.TextEditing
                 return m_luaDocumentClient.Open(uri, file.InGCF);
             }
           
-            return m_txtDocumentClient.Open(uri, file.InGCF);;           
+            return m_txtDocumentClient.Open(uri, file.InGCF, sourceTag);           
 
         }
 
@@ -411,9 +411,9 @@ namespace WorldsmithATF.TextEditing
                 return Open(uri, false);
             }
 
-            public IDocument Open(Uri uri, bool fromVPK)
+            public IDocument Open(Uri uri, bool fromVPK, bool sourceTag = false)
             {
-                CodeDocument doc = new CodeDocument(uri);
+                CodeDocument doc = new CodeDocument(uri, fromVPK, sourceTag);
                 if(fromVPK)
                 {
                     doc.FromVPK = true;

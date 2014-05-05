@@ -94,12 +94,16 @@ namespace WorldsmithATF.Commands
 
             TextFile text = contextRegistry.ActiveContext.As<TextFile>();
             ProjectFile file = contextRegistry.ActiveContext.As<ProjectFile>();
+
+            //Show the View Source option if the file has an editor
+            bool ShouldShowViewSource = false;
+            ShouldShowViewSource |= contextRegistry.ActiveContext.As<KVFile>() != null; 
             
             if (file == null) return false;
             switch(e)
             {
                 case TreeListCommandsEnum.OpenEditor: return contextRegistry.ActiveContext.As<ProjectFolder>() == null;
-                case TreeListCommandsEnum.OpenSource: return text != null;
+                case TreeListCommandsEnum.OpenSource: return ShouldShowViewSource;
                 case TreeListCommandsEnum.Delete: return !file.InGCF;
                 case TreeListCommandsEnum.Rename: return !file.InGCF;
                 default: return false;
@@ -144,7 +148,7 @@ namespace WorldsmithATF.Commands
         {
             TextFile file = contextRegistry.ActiveContext.As<TextFile>();
 
-            textEditor.OpenDocument(file);
+            textEditor.OpenDocument(file, true);
 
         }
 
