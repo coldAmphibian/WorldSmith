@@ -43,11 +43,12 @@ namespace WorldsmithATF.Documents
 
             string filename = Path.GetFileName(path);
 
-            ControlInfo = new ControlInfo(filename, Uri.ToString(), StandardControlGroup.Center);
+            ControlInfo = new ControlInfo(filename, "KeyValue: " + path, StandardControlGroup.Center);
             ControlInfo.IsDocument = true;
 
             PropertyGrid = new PropertyGrid();
 
+            PropertyGrid.Bind(KeyValueNode);
             
         }
 
@@ -67,11 +68,11 @@ namespace WorldsmithATF.Documents
 
             KeyValue kv = KVParser.ParseKeyValueText(text);
 
-            KeyValueNode = kv;
+            KeyValueNode = new EditableKeyValue(kv);
 
         }
 
-        public KeyValue KeyValueNode
+        public EditableKeyValue KeyValueNode
         {
             get;
             private set;

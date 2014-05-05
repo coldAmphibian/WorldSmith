@@ -15,6 +15,7 @@ using WorldsmithATF.ObjectTypes;
 
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
 using Sce.Atf.Controls.PropertyEditing;
+using KVLib;
 
 namespace WorldsmithATF
 {
@@ -84,6 +85,7 @@ namespace WorldsmithATF
                 DotaObjectsSchema.LuaDocumentType.Type.Define(new ExtensionInfo<DotaEditingContext>());
                 DotaObjectsSchema.VMTType.Type.Define(new ExtensionInfo<DotaEditingContext>());
 
+                
                 break; //Only one namespace
             }
         }
