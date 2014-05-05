@@ -38,7 +38,7 @@ namespace WorldsmithATF.Project
 
             BoundPropertyDescriptor[] settings = new BoundPropertyDescriptor[] {
                 new BoundPropertyDescriptor(typeof(GlobalSettings), 
-                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory", typeof(FolderUriEditor), null),
+                    () => GlobalSettings.DotaDirectory, "Dota 2 Directory", "Paths", "Path to dota 2 directory", new FolderUriEditor(), null),
 
                    
             };
