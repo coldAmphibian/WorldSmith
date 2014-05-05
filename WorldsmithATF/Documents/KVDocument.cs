@@ -4,22 +4,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KVLib;
+using WorldsmithATF.Project;
+using System.IO;
 
 namespace WorldsmithATF.Documents
 {
     class KVDocument : IDocument
     {
 
+        public KVDocument(KVFile file)
+        {
+           
+            string path = file.Path;
 
+            if(file.InGCF)
+            {
+                path = "VPK:/" + path;
+            }
+            Uri = new Uri(path);
+
+            IsReadOnly = file.InGCF;
+
+            LoadKeyValuesFromFile(file);
+        }
+
+        private void LoadKeyValuesFromFile(KVFile file)
+        {
+            string path = file.Path;
+
+            string text = "";
+
+            if(file.InGCF)
+            {
+                text = DotaVPKService.Instance.ReadTextFromVPK(path);
+            }
+            else
+            {
+                text = File.ReadAllText(path);
+            }
+
+            KeyValue kv = KVParser.ParseKeyValueText(text);
+
+            KeyValueNode = kv;
+
+        }
+
+        public KeyValue KeyValueNode
+        {
+            get;
+            private set;
+        }
+
+        bool dirty = false;
         public bool Dirty
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return dirty; }
             set
             {
-                throw new NotImplementedException();
+                bool dirtyChanged = false;
+                if (dirty != value) dirtyChanged = true;
+                dirty = value;
+
+                if (dirtyChanged) DirtyChanged.Raise(this, EventArgs.Empty);                
             }
         }
 
@@ -27,23 +74,32 @@ namespace WorldsmithATF.Documents
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get;
+            private set;
         }
 
         public string Type
         {
-            get { throw new NotImplementedException(); }
+            get { return "Key Value".Localize(); }
         }
 
+        private Uri uri;
         public Uri Uri
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return uri; }
             set
             {
-                throw new NotImplementedException();
+                bool uriChanged = false;
+                Uri oldUri = null;
+                if (uri != value) 
+                {
+                    uriChanged = true;
+                    oldUri = uri;
+                }
+
+                uri = value;
+
+                if (uriChanged) UriChanged.Raise(this, new UriChangedEventArgs(oldUri));
             }
         }
 

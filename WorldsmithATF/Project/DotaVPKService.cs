@@ -23,6 +23,8 @@ namespace WorldsmithATF.Project
     {
         public static string VPKPath = "dota" + Path.DirectorySeparatorChar + "pak01_dir.vpk";
 
+        public static DotaVPKService Instance;
+
 
         SettingsService settingsService;
 
@@ -31,6 +33,7 @@ namespace WorldsmithATF.Project
         public DotaVPKService(SettingsService settings)
         {
             this.settingsService = settings;
+            Instance = this;
         }
 
         public void Initialize()
