@@ -52,11 +52,14 @@ namespace WorldsmithATF.Documents
 
 
             TreeListView tlv = new TreeListView(TreeListView.Style.TreeList);
+            
             TreeListViewAdapter adapter = new TreeListViewAdapter(tlv);
             var kvtv = new KeyValueTreeView();
             kvtv.AddRoot(KeyValueNode);
             adapter.View = kvtv;
-
+            tlv.Columns.First().Width = 300;
+            tlv.Columns.ElementAt(1).Width = 300;
+            tlv.ExpandAll();
             
             DisplayControl = tlv;
            
