@@ -9,6 +9,7 @@ using Sce.Atf;
 using Sce.Atf.Dom;
 using Sce.Atf.Applications;
 using Sce.Atf.Controls.PropertyEditing;
+using Sce.Atf.Adaptation;
 using System.Windows.Forms;
 
 using PropertyGrid = Sce.Atf.Controls.PropertyEditing.PropertyGrid;
@@ -115,9 +116,17 @@ namespace WorldsmithATF.UI
 
             controlHostService.RegisterControl(KVDoc.DisplayControl, KVDoc.ControlInfo, this);
 
+            KVDoc.KVTreeView.SelectionChanged += KVTreeView_SelectionChanged;
             
             return KVDoc;
         }
+
+        void KVTreeView_SelectionChanged(object sender, EventArgs e)
+        {
+            var kvtv = sender as KeyValueTreeView;
+            contextRegistry.ActiveContext = kvtv.Selection.First();
+        }
+
 
         public void Close(IDocument document)
         {

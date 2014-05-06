@@ -89,7 +89,8 @@
   <ItemGroup>
     <Compile Include="Commands\ProjectCommands.cs" />
     <Compile Include="Commands\TreeListCommands.cs" />
-    <Compile Include="Documents\KeyValueTreeView.cs" />
+    <Compile Include="TypeDescriptors\PropertyOverridingTypeDescriptor.cs" />
+    <Compile Include="UI\KeyValueTreeView.cs" />
     <Compile Include="Documents\KVDocument.cs" />
     <Compile Include="DomWrappers\Project\KVFile.cs" />
     <Compile Include="DomWrappers\Project\AddonProject.cs" />
@@ -164,9 +165,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TextEditing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

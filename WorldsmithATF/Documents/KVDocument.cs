@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 using PropertyGrid = Sce.Atf.Controls.PropertyEditing.PropertyGrid;
 using Sce.Atf.Controls;
+using WorldsmithATF.UI;
 
 namespace WorldsmithATF.Documents
 {
@@ -25,7 +26,13 @@ namespace WorldsmithATF.Documents
             set;
         }
 
-        public Control DisplayControl
+        public TreeListView DisplayControl
+        {
+            get;
+            set;
+        }
+
+        public KeyValueTreeView KVTreeView
         {
             get;
             set;
@@ -54,17 +61,21 @@ namespace WorldsmithATF.Documents
             TreeListView tlv = new TreeListView(TreeListView.Style.TreeList);
             
             TreeListViewAdapter adapter = new TreeListViewAdapter(tlv);
+            
             var kvtv = new KeyValueTreeView();
             kvtv.AddRoot(KeyValueNode);
             adapter.View = kvtv;
             tlv.Columns.First().Width = 300;
             tlv.Columns.ElementAt(1).Width = 300;
             tlv.ExpandAll();
-            
+
+            KVTreeView = kvtv;
             DisplayControl = tlv;
            
             
         }
+
+       
 
         void KeyValueNode_ItemChanged(object sender, EventArgs e)
         {

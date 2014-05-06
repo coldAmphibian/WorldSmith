@@ -16,6 +16,7 @@ using WorldsmithATF.ObjectTypes;
 using PropertyDescriptor = Sce.Atf.Dom.PropertyDescriptor;
 using Sce.Atf.Controls.PropertyEditing;
 using KVLib;
+using WorldsmithATF.TypeDescriptors;
 
 namespace WorldsmithATF
 {
@@ -85,9 +86,49 @@ namespace WorldsmithATF
                 DotaObjectsSchema.LuaDocumentType.Type.Define(new ExtensionInfo<DotaEditingContext>());
                 DotaObjectsSchema.VMTType.Type.Define(new ExtensionInfo<DotaEditingContext>());
 
+
+                OverrideProperty(typeof(KeyValue), "Key");
+                OverrideProperty(typeof(KeyValue), "Children", new PropertyEditorAttribute(typeof(NestedCollectionEditor)));
+                //OverrideProperty(typeof(KeyValue), "Children");
                 
                 break; //Only one namespace
             }
+        }
+
+        //Property overriding taken from 
+        //http://stackoverflow.com/questions/12143650/how-to-add-property-level-attribute-to-the-typedescriptor-at-runtime
+        private void OverrideProperty(Type type, string PropertyName, params Attribute[] attributes)
+        {
+            //Override the KeyValue type descriptors
+            // prepare our property overriding type descriptor
+            PropertyOverridingTypeDescriptor ctd = new PropertyOverridingTypeDescriptor(TypeDescriptor.GetProvider(type).GetTypeDescriptor(type));
+
+            // iterate through properies in the supplied object/type
+            foreach (System.ComponentModel.PropertyDescriptor pd in TypeDescriptor.GetProperties(typeof(KeyValue)))
+            {
+                // for every property that complies to our criteria
+                if (pd.Name == PropertyName)
+                {
+                    // we first construct the custom PropertyDescriptor with the TypeDescriptor's
+                    // built-in capabilities
+                    System.ComponentModel.PropertyDescriptor pd2 =
+                        TypeDescriptor.CreateProperty(
+                            type, // or just _settings, if it's already a type
+                            pd, // base property descriptor to which we want to add attributes
+                        // The PropertyDescriptor which we'll get will just wrap that
+                        // base one returning attributes we need.
+                            attributes
+                        // this method really can take as many attributes as you like,
+                        // not just one
+                        );
+
+                    // and then we tell our new PropertyOverridingTypeDescriptor to override that property
+                    ctd.OverrideProperty(pd2);
+                }
+            }
+
+            // then we add new descriptor provider that will return our descriptor istead of default
+            TypeDescriptor.AddProvider(new TypeDescriptorOverridingProvider(ctd), type);
         }
 
 

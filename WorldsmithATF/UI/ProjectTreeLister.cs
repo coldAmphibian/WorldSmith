@@ -200,9 +200,15 @@ namespace WorldsmithATF.UI
             }
         }
 
+        [Import]
+        DomExplorer exp = null;
+
         private void view_SelectionChanged(object sender, EventArgs e)
         {
-            m_contextRegistry.ActiveContext = (TreeView as ProjectView).Selection.FirstOrDefault().As<DomNode>();
+            var obj = (TreeView as ProjectView).Selection.FirstOrDefault();
+            obj.As<DomNode>().InitializeExtensions();
+            m_contextRegistry.ActiveContext = obj.As<DomNode>();
+            exp.Root = obj.As<DomNode>();
         }
       
 

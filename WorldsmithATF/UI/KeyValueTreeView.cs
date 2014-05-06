@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorldsmithATF.Documents
+namespace WorldsmithATF.UI
 {
     class KeyValueTreeView : ITreeListView, IItemView, IObservableContext, ISelectionContext, IValidationContext
     {
