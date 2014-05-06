@@ -113,7 +113,7 @@ namespace WorldsmithATF.UI
         {
             KVDocument KVDoc = new KVDocument(uri);
 
-            controlHostService.RegisterControl(KVDoc.PropertyGrid, KVDoc.ControlInfo, this);
+            controlHostService.RegisterControl(KVDoc.DisplayControl, KVDoc.ControlInfo, this);
 
             
             return KVDoc;
@@ -122,7 +122,7 @@ namespace WorldsmithATF.UI
         public void Close(IDocument document)
         {
              KVDocument kvdoc = document as KVDocument;
-             if (kvdoc != null) controlHostService.UnregisterControl(kvdoc.PropertyGrid);
+             if (kvdoc != null) controlHostService.UnregisterControl(kvdoc.DisplayControl);
         }
 
         public DocumentClientInfo Info
@@ -139,7 +139,7 @@ namespace WorldsmithATF.UI
         public void Show(IDocument document)
         {
             KVDocument kvdoc = document as KVDocument;
-            if (kvdoc != null) controlHostService.Show(kvdoc.PropertyGrid);
+            if (kvdoc != null) controlHostService.Show(kvdoc.DisplayControl);
         }
     }
 }

@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorldsmithATF.Project;
+using System.Windows.Forms;
+
+using PropertyGrid = Sce.Atf.Controls.PropertyEditing.PropertyGrid;
+using Sce.Atf.Controls;
 
 namespace WorldsmithATF.Documents
 {
@@ -21,7 +25,7 @@ namespace WorldsmithATF.Documents
             set;
         }
 
-        public PropertyGrid PropertyGrid
+        public Control DisplayControl
         {
             get;
             set;
@@ -46,10 +50,22 @@ namespace WorldsmithATF.Documents
             ControlInfo = new ControlInfo(filename, "KeyValue: " + path, StandardControlGroup.Center);
             ControlInfo.IsDocument = true;
 
-            PropertyGrid = new PropertyGrid();
 
-            PropertyGrid.Bind(KeyValueNode);
+            TreeListView tlv = new TreeListView(TreeListView.Style.TreeList);
+            TreeListViewAdapter adapter = new TreeListViewAdapter(tlv);
+            var kvtv = new KeyValueTreeView();
+            kvtv.AddRoot(KeyValueNode);
+            adapter.View = kvtv;
+
             
+            DisplayControl = tlv;
+           
+            
+        }
+
+        void KeyValueNode_ItemChanged(object sender, EventArgs e)
+        {
+            Dirty = true;
         }
 
         private void LoadKeyValuesFromFile(string path, bool InVpk)
@@ -68,11 +84,11 @@ namespace WorldsmithATF.Documents
 
             KeyValue kv = KVParser.ParseKeyValueText(text);
 
-            KeyValueNode = new EditableKeyValue(kv);
+            KeyValueNode = kv;
 
         }
 
-        public EditableKeyValue KeyValueNode
+        public KeyValue KeyValueNode
         {
             get;
             private set;

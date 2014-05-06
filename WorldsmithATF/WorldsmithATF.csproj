@@ -68,7 +68,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\Atf.SyntaxEditorControl.dll</HintPath>
     </Reference>
-    <Reference Include="KVLib">
+    <Reference Include="KVLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\KVLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -88,7 +89,7 @@
   <ItemGroup>
     <Compile Include="Commands\ProjectCommands.cs" />
     <Compile Include="Commands\TreeListCommands.cs" />
-    <Compile Include="Documents\EditableKeyValue.cs" />
+    <Compile Include="Documents\KeyValueTreeView.cs" />
     <Compile Include="Documents\KVDocument.cs" />
     <Compile Include="DomWrappers\Project\KVFile.cs" />
     <Compile Include="DomWrappers\Project\AddonProject.cs" />
