@@ -14,6 +14,7 @@ using WorldsmithATF.Project;
 using Sce.Atf.Dom;
 using System.Collections.Generic;
 using System.Drawing;
+using WorldsmithATF.Commands;
 
 namespace WorldsmithATF.UI
 {
@@ -80,16 +81,15 @@ namespace WorldsmithATF.UI
 
         }
 
+        [Import]
+        private TreeListCommands treeCommands = null;
+
         void TreeControl_DoubleClick(object sender, EventArgs e)
         {
-            ProjectView view = TreeView as ProjectView;
-            object selection = view.Selection.FirstOrDefault();
 
-            if (selection != null && selection.Is<Project.TextFile>())
+            if (treeCommands.CanDoCommand(TreeListCommandsEnum.OpenEditor))
             {
-                TextFile f = selection.As<TextFile>();
-                textEditor.OpenDocument(f);
-
+                treeCommands.DoCommand(TreeListCommandsEnum.OpenEditor);
             }
         }
 
