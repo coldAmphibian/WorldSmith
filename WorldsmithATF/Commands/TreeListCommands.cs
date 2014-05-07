@@ -80,6 +80,7 @@ namespace WorldsmithATF.Commands
 
         public IEnumerable<object> GetCommands(object context, object target)
         {
+            if (context == null) return new object[] { };
             return new object[] {
                 TreeListCommandsEnum.OpenEditor,
                 TreeListCommandsEnum.OpenSource,
