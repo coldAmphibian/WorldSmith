@@ -45,8 +45,7 @@ namespace WorldsmithATF.Documents
 
             bool inVPK = file.GetComponents(UriComponents.Scheme, UriFormat.Unescaped) == "vpk";
 
-           
-            Uri = new Uri(path);
+                      
 
             IsReadOnly = inVPK;
 

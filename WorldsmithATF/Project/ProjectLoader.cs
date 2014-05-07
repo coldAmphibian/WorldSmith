@@ -94,6 +94,12 @@ namespace WorldsmithATF.Project
                 WrapperType = typeof(TextFile),
                 DisplayImageKey = Resources.DocumentImage
             }},
+            { ".vdf", new FileTypeResolver() {
+                DomNodeType = DotaObjectsSchema.KVDocumentType.Type,
+                DisplayName = "Valve Definition File",
+                WrapperType = typeof(KVFile),
+                DisplayImageKey = Resources.DocumentImage
+            }},
         };
 
         #region Addon Project
