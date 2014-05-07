@@ -165,7 +165,7 @@ namespace WorldsmithATF.UI
             {
                 TreeControl control = sender as TreeControl;
 
-                IEnumerable<object> commands = commandMenuProviders.GetCommands(null, null);
+                IEnumerable<object> commands = commandMenuProviders.GetCommands((TreeView as ProjectView).Selection.FirstOrDefault(), null);
 
                 Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
 
