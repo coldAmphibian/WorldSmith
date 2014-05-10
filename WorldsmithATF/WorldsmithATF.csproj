@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\KeyValueCommands.cs" />
     <Compile Include="Commands\ProjectCommands.cs" />
     <Compile Include="Commands\TreeListCommands.cs" />
     <Compile Include="TypeDescriptors\PropertyOverridingTypeDescriptor.cs" />

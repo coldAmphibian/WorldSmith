@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 using PropertyGrid = Sce.Atf.Controls.PropertyEditing.PropertyGrid;
 using WorldsmithATF.Documents;
+using System.Drawing;
 
 namespace WorldsmithATF.UI
 {
@@ -117,8 +118,26 @@ namespace WorldsmithATF.UI
             controlHostService.RegisterControl(KVDoc.DisplayControl, KVDoc.ControlInfo, this);
 
             KVDoc.KVTreeView.SelectionChanged += KVTreeView_SelectionChanged;
+            KVDoc.ControlInfo.Control.MouseUp += Control_MouseUp;
             
             return KVDoc;
+        }
+
+        [ImportMany]
+        private IEnumerable<Lazy<IContextMenuCommandProvider>> commandMenuProviders;
+
+        void Control_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                Control control = sender as Control;
+
+                IEnumerable<object> commands = commandMenuProviders.GetCommands(null, contextRegistry.ActiveContext);
+
+                Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
+
+                commandService.RunContextMenu(commands, screenPoint);
+            }
         }
 
         void KVTreeView_SelectionChanged(object sender, EventArgs e)
