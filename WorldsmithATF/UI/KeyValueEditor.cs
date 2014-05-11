@@ -118,7 +118,7 @@ namespace WorldsmithATF.UI
             controlHostService.RegisterControl(KVDoc.DisplayControl, KVDoc.ControlInfo, this);
 
             KVDoc.KVTreeView.SelectionChanged += KVTreeView_SelectionChanged;
-            KVDoc.ControlInfo.Control.MouseUp += Control_MouseUp;
+            KVDoc.OnRightClick += Control_MouseUp;
             
             return KVDoc;
         }
@@ -128,16 +128,15 @@ namespace WorldsmithATF.UI
 
         void Control_MouseUp(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
-            {
-                Control control = sender as Control;
+          
+            var doc = sender as KVDocument;
 
-                IEnumerable<object> commands = commandMenuProviders.GetCommands(null, contextRegistry.ActiveContext);
+            IEnumerable<object> commands = commandMenuProviders.GetCommands(sender, contextRegistry.ActiveContext);
 
-                Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
+            Point screenPoint = doc.ControlInfo.Control.PointToScreen(new Point(e.X, e.Y));
 
-                commandService.RunContextMenu(commands, screenPoint);
-            }
+            commandService.RunContextMenu(commands, screenPoint);
+            
         }
 
         void KVTreeView_SelectionChanged(object sender, EventArgs e)

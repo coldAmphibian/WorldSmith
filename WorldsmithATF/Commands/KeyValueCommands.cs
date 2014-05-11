@@ -18,6 +18,7 @@ using WorldsmithATF.Project;
 using Project = WorldsmithATF.Project.AddonProject;
 using Sce.Atf.Dom;
 using KVLib;
+using WorldsmithATF.Documents;
 
 namespace WorldsmithATF.Commands
 {
@@ -37,11 +38,13 @@ namespace WorldsmithATF.Commands
     {
 
         ICommandService commandService;
+        IContextRegistry contextRegistry;
 
         [ImportingConstructor]
-        public KeyValueCommands(ICommandService commandService)
+        public KeyValueCommands(ICommandService commandService, IContextRegistry context)
         {
             this.commandService = commandService;
+            this.contextRegistry = context;
         }
 
 
@@ -79,7 +82,8 @@ namespace WorldsmithATF.Commands
         public IEnumerable<object> GetCommands(object context, object target)
         {
             KeyValue kv = target as KeyValue;
-            if(kv != null)
+            var kvdoc = context as KVDocument;
+            if(kv != null && !kvdoc.IsReadOnly)
             {
                 return new object[] {
                     KeyValueCommandsEnum.EditKey,
@@ -98,8 +102,32 @@ namespace WorldsmithATF.Commands
 
         public void DoCommand(object commandTag)
         {
+            KeyValueCommandsEnum e = (KeyValueCommandsEnum)commandTag;
+
+            switch(e)
+            {
+                case KeyValueCommandsEnum.EditKey: break;
+                case KeyValueCommandsEnum.EditValue: break;
+                case KeyValueCommandsEnum.AddChild: AddChild(); break;
+                case KeyValueCommandsEnum.RemoveChild: RemoveChild(); break;
+            }
+        }
+        
+        private void RemoveChild()
+        {
+            KeyValue kv = contextRegistry.ActiveContext as KeyValue;
+
+            //TODO: Let the keyvalue know it's parent so we can remove it
+
+        }
+
+        private void AddChild()
+        {
+            KeyValue kv = contextRegistry.ActiveContext as KeyValue;
+
             
         }
+
 
         public void UpdateCommand(object commandTag, CommandState commandState)
         {

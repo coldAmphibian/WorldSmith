@@ -39,6 +39,8 @@ namespace WorldsmithATF.Documents
         }
 
 
+        public event MouseEventHandler OnRightClick;
+
         public KVDocument(Uri file)
         {        
             string path = file.GetComponents(UriComponents.Path, UriFormat.Unescaped);
@@ -67,11 +69,21 @@ namespace WorldsmithATF.Documents
             tlv.Columns.First().Width = 300;
             tlv.Columns.ElementAt(1).Width = 300;
             tlv.ExpandAll();
+            tlv.Control.MouseUp += Control_MouseUp;
 
             KVTreeView = kvtv;
             DisplayControl = tlv;
            
             
+        }
+
+        void Control_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+
+                OnRightClick.Invoke(this, e);
+            }
         }
 
        
